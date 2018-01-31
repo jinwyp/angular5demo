@@ -1,0 +1,24 @@
+{
+  "title": "order schema",
+  "description": "describes a order",
+  "version": 0,
+  "disableKeyCompression": true,
+  "type": "object",
+  "properties": {
+    "businessName": {
+      "type": "string",
+      "primary": true,
+      "default": ""
+    },
+    "shipName": {
+      "type": "string",
+      "default": ""
+    },
+    "shippingDate": {
+      "type": "string",
+      "default": ""
+    }
+
+  },
+  "required": ["businessName", "shipName"]
+}
