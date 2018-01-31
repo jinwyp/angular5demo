@@ -21,7 +21,7 @@
       "styles": [
         "css/bootstrap/dist/css/bootstrap.min.css",
         "css/font-awesome/css/font-awesome.min.css",
-        "css/scss/styles.scss"
+        "css/scss/page/admin.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
