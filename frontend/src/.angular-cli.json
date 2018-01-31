@@ -19,8 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "bootstrap/dist/css/bootstrap.min.css",
-        "font-awesome/css/font-awesome.min.css",
+        "css/bootstrap/dist/css/bootstrap.min.css",
+        "css/font-awesome/css/font-awesome.min.css",
         "css/scss/styles.scss"
       ],
       "scripts": [],
