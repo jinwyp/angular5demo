@@ -46,7 +46,7 @@ export class OrderService {
     }
 
 
-    save(key: string, result: any) {
+    saveLocalStorage(key: string, result: any) {
         localStorage.setItem(key, JSON.stringify(result))
     }
 
@@ -72,7 +72,7 @@ export class OrderService {
         return this.http.get<any[]>(this.urlApi + '/orders', {params : params})
             .pipe(
                 tap(orders => {
-                    this.save('orders', orders)
+                    this.saveLocalStorage('orders', orders)
                     console.log(`fetched orders: `, orders)
                 }),
                 catchError(this.handleError('getOrders', []))
@@ -137,15 +137,28 @@ export class OrderService {
 
         return this.http.get<any[]>(this.urlApi + '/ships')
             .pipe(
-                tap(results => console.log(`getShips: `, results)),
+                tap(results => {
+                    this.saveLocalStorage('ships', results)
+                    console.log(`getShips: `, results)
+                }),
                 catchError(this.handleError<any>('getShips', []))
+            )
+    }
+
+    getShipById(id: number): Observable<any> {
+        const url = `${this.urlApi}/ships/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(order => console.log(`getShipById id=${id}: `, order)),
+                catchError(this.handleError<any>(`getOrderById id=${id}`))
             )
     }
 
     addShip(ship: any): Observable<any> {
         return this.http.post<any>(this.urlApi + '/ships', ship, httpOptions)
             .pipe(
-                tap((result) => console.log(`addShip id=${ship.id}`, result)),
+                tap((result) => console.log(`addShip id=${ship.id}: `, result)),
                 catchError(this.handleError<any>('addShip'))
             )
     }
@@ -153,7 +166,7 @@ export class OrderService {
     updateShip(ship: any): Observable<any> {
         return this.http.put(this.urlApi + '/ships', ship, httpOptions)
             .pipe(
-                tap(result => console.log(`updateShip id=${ship.id}`, result)),
+                tap(result => console.log(`updateShip id=${ship.id}: `, result)),
                 catchError(this.handleError<any>('updateShip'))
             )
     }
@@ -161,11 +174,67 @@ export class OrderService {
     deleteShip(ship: any | number): Observable<any> {
         const id = typeof ship === 'number' ? ship : ship.id
 
-        return this.http.delete<any>(`${this.urlApi}/ships/${id}`, httpOptions)
+        return this.http.delete<any>(`${this.urlApi}/ships/${id}: `, httpOptions)
             .pipe(
                 tap(result => console.log(`deleteShip id=${id}`, result)),
                 catchError(this.handleError<any>('deleteShip'))
             )
     }
 
+
+
+
+    getShipAgencies(query?: any): Observable<any[]> {
+        let params = new HttpParams()
+            .set('pageSize', query.pageSize)
+            .set('pageNo', query.pageNo)
+
+        if (query.businessName) { params = params.append('businessName', query.businessName) }
+        if (query.shipName) { params = params.append('shipName', query.shipName)}
+
+        return this.http.get<any[]>(this.urlApi + '/shipAgencies')
+            .pipe(
+                tap(results => {
+                    this.saveLocalStorage('shipAgencies', results)
+                    console.log(`getShipAgencies: `, results)
+                }),
+                catchError(this.handleError<any>('getShipAgencies', []))
+            )
+    }
+
+    getShipAgencyById(id: number): Observable<any> {
+        const url = `${this.urlApi}/shipAgencies/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(ShipAgency => console.log(`getShipAgencyById id=${id}: `, ShipAgency)),
+                catchError(this.handleError<any>(`getShipAgencyById id=${id}`))
+            )
+    }
+
+    addShipAgency(ShipAgency: any): Observable<any> {
+        return this.http.post<any>(this.urlApi + '/shipAgencies', ShipAgency, httpOptions)
+            .pipe(
+                tap((result) => console.log(`addShipAgency id=${ShipAgency.id}: `, result)),
+                catchError(this.handleError<any>('addShipAgency'))
+            )
+    }
+
+    updateShipAgency(ShipAgency: any): Observable<any> {
+        return this.http.put(this.urlApi + '/shipAgencies', ShipAgency, httpOptions)
+            .pipe(
+                tap(result => console.log(`updateShipAgency id=${ShipAgency.id}: `, result)),
+                catchError(this.handleError<any>('updateShipAgency'))
+            )
+    }
+
+    deleteShipAgency(ShipAgency: any | number): Observable<any> {
+        const id = typeof ShipAgency === 'number' ? ShipAgency : ShipAgency.id
+
+        return this.http.delete<any>(`${this.urlApi}/shipAgencies/${id}: `, httpOptions)
+            .pipe(
+                tap(result => console.log(`deleteShipAgency id=${id}`, result)),
+                catchError(this.handleError<any>('deleteShipAgency'))
+            )
+    }
 }

@@ -9,11 +9,11 @@ import {HttpService} from '../../../../bs-form-module/services/http.service'
 import { formErrorHandler, isMobilePhone } from '../../../../bs-form-module/validators/validator'
 
 @Component({
-    selector    : 'app-ship-agency',
-    templateUrl : './shipAgency.component.html',
-    styleUrls   : ['./shipAgency.component.scss']
+    selector    : 'app-ship',
+    templateUrl : './shipManagement.component.html',
+    styleUrls   : ['./shipManagement.component.scss']
 })
-export class ShipAgencyComponent implements OnInit {
+export class ShipManagementComponent implements OnInit {
 
     shipForm: FormGroup
     shipSearchForm: FormGroup
@@ -25,6 +25,7 @@ export class ShipAgencyComponent implements OnInit {
 
     currentOrderId: number
     shipList: any[] = []
+    shipAgencyList: any[] = []
 
 
     pagination: any = {
@@ -37,7 +38,13 @@ export class ShipAgencyComponent implements OnInit {
     shipFormError: any              = {}
     shipFormValidationMessages: any = {
         'name' : {
-            'required' : '公司名称!'
+            'required' : '请填写船只中文名称!'
+        },
+        'shipName'     : {
+            'required' : '请填写船只英文名称!'
+        },
+        'company' : {
+            'required' : '请选择船只代理公司!'
         }
     }
 
@@ -59,10 +66,9 @@ export class ShipAgencyComponent implements OnInit {
     ngOnInit() {
         this.createShipForm()
         this.createShipSearchForm()
+        this.getShipList()
         this.getShipAgencyList()
     }
-
-
 
 
 
@@ -77,6 +83,23 @@ export class ShipAgencyComponent implements OnInit {
 
         console.log(query)
         this.orderService.getShipAgencies(query).subscribe(
+            data => { this.shipAgencyList = data},
+            error => { this.httpService.errorHandler(error)}
+        )
+    }
+
+
+    getShipList(event?: any) {
+
+        let query: any = {
+            pageSize : this.pagination.pageSize,
+            pageNo   : this.pagination.pageNo
+        }
+
+        query = (<any>Object).assign(query, this.shipSearchForm.value)
+
+        console.log(query)
+        this.orderService.getShips(query).subscribe(
             data => { this.shipList = data},
             error => { this.httpService.errorHandler(error)}
         )
@@ -86,7 +109,9 @@ export class ShipAgencyComponent implements OnInit {
     createShipSearchForm(): void {
 
         this.shipSearchForm = this.fb.group({
-            'name' : ['']
+            'name' : [''],
+            'englishName'     : [''],
+            'company' : ['']
         })
     }
 
@@ -98,7 +123,9 @@ export class ShipAgencyComponent implements OnInit {
     createShipForm(): void {
 
         this.shipForm = this.fb.group({
-            'name' : ['', [Validators.required]]
+            'name' : ['', [Validators.required]],
+            'englishName'     : ['', [Validators.required]],
+            'company'   : ['', [Validators.required]]
         })
 
         this.shipForm.valueChanges.subscribe(data => {
@@ -130,12 +157,12 @@ export class ShipAgencyComponent implements OnInit {
             }
 
 
-            this.orderService.addShipAgency(postData).subscribe(
+            this.orderService.addShip(postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShipAgencyList()
+                    this.getShipList()
                     this.isShowForm = false
 
                 },
@@ -143,12 +170,12 @@ export class ShipAgencyComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
-            this.orderService.updateShipAgency(postData).subscribe(
+            this.orderService.updateShip(postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getShipAgencyList()
+                    this.getShipList()
                     this.isShowForm = false
                 },
                 error => {this.httpService.errorHandler(error)}
@@ -164,7 +191,11 @@ export class ShipAgencyComponent implements OnInit {
             this.isAddNew = true
 
             this.shipForm.patchValue({
-                'name' : ''})
+                'name' : '',
+                'englishName'     : '',
+                'company' : ''
+
+            })
 
         } else {
             this.isAddNew = false
@@ -178,12 +209,12 @@ export class ShipAgencyComponent implements OnInit {
 
     deleteItem(ship: any) {
 
-        this.orderService.deleteShipAgency(ship).subscribe(
+        this.orderService.deleteShip(ship).subscribe(
             data => {
                 console.log('删除成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getShipAgencyList()
+                this.getShipList()
             },
             error => {
                 this.httpService.errorHandler(error)

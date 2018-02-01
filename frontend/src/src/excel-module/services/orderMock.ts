@@ -23,7 +23,7 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        const ships: any[] = [
+        let ships: any[] = [
             {id : 1, name : '银杏', englishName : 'MV.ROSCO GINKGO', company : ''},
             {id : 2, name : '海洋之星', englishName : 'MV. NPS OCEAN STAR', company : ''},
             {id : 3, name : '凯旋11', englishName : 'MV. KAI XUAN 11', company : ''},
@@ -50,6 +50,22 @@ export class InMemOrderDataService implements InMemoryDbService {
             {id : 24, name : '拉瑞玛', englishName : 'MV CONTI LARIMAR', company : ''},
         ]
 
+        const shipsLocal = localStorage.getItem('ships')
+
+        if (shipsLocal) {
+            ships = JSON.parse(shipsLocal)
+        }
+
+
+
+
+        let shipAgencies = []
+
+        const shipAgenciesLocal = localStorage.getItem('shipAgencies')
+
+        if (shipAgenciesLocal) {
+            shipAgencies = JSON.parse(shipAgenciesLocal)
+        }
 
 
 
@@ -66,6 +82,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {orders, ships, businessNames}
+        return {orders, shipAgencies, ships, businessNames}
     }
 }

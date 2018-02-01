@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h3 class="mt-4 mb-4">
-                船只代理公司管理
+                船只管理
                 <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
             </h3>
         </div>
@@ -17,7 +17,10 @@
         <div class="col">
             <form [formGroup]="shipForm" (keydown.enter)="$event.preventDefault()" >
 
-                <bs-text-input formControlName="name" [fc]="shipForm.get('name')" [type]="'text'" [label]="'公司名称:'" [dirty]="ignoreDirty" [error]="shipFormError.name"></bs-text-input>
+                <bs-text-input formControlName="name" [fc]="shipForm.get('name')" [type]="'text'" [label]="'船只中文名称:'" [dirty]="ignoreDirty" [error]="shipFormError.name"></bs-text-input>
+                <bs-text-input formControlName="englishName" [fc]="shipForm.get('englishName')" [type]="'text'" [label]="'船只英文名称:'" [dirty]="ignoreDirty" [error]="shipFormError.englishName"></bs-text-input>
+                <bs-select formControlName ="company" [fc]="shipForm.get('company')" [label]="'船只所属公司:'" [labelclass]="'col-4'" [options]="shipAgencyList" [error]="shipFormError.company" ></bs-select>
+
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
@@ -37,7 +40,10 @@
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="shipSearchForm.get('name')" [type]="'text'" [label]="'公司名称:'" ></bs-text-input>
+                        <bs-text-input formControlName="name" [fc]="shipForm.get('name')" [type]="'text'" [label]="'船中文名称:'" [labelclass]="'col-2'"></bs-text-input>
+                    </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="name" [fc]="shipForm.get('englishName')" [type]="'text'" [label]="'船英文名称:'" [labelclass]="'col-2'"></bs-text-input>
                     </div>
                 </div>
 
@@ -65,7 +71,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>船只代理公司名称</th>
+                    <th>船只中文名称</th>
+                    <th>船只英文名称</th>
+                    <th>船只所属公司</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -73,6 +81,8 @@
                     <tr *ngFor="let ship of shipList; trackBy: trackByFn">
                         <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
                         <td> {{ship.name }}</td>
+                        <td> {{ship.englishName }}</td>
+                        <td> {{ship.company}}</td>
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>

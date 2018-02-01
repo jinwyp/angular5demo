@@ -72,8 +72,11 @@
 
             <div class="collapse" [class.show]="menuList[2]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===2" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/supplier/ship" (click)="clickSubMenu(21)">船只管理</a> </li>
-                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(22)">煤炭贸易商管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/supplier/shipAgency" (click)="clickSubMenu(21)">船只代理公司</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/supplier/ship" (click)="clickSubMenu(22)">船只管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/supplier/harbor" (click)="clickSubMenu(23)">港口管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(23)">煤炭贸易商管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(24)">CSS贸易公司管理</a> </li>
                 </ul>
             </div>
         </div>

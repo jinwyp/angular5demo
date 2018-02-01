@@ -1,14 +1,13 @@
-import {Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange, EventEmitter} from '@angular/core'
+import {
+    Component, OnInit, Input, Output, forwardRef, ElementRef, ViewChild, OnChanges, SimpleChange, EventEmitter,
+    HostListener
+} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 @Component({
     selector: 'bs-select',
     templateUrl: './selectDropdown.component.html',
     styleUrls: ['./selectDropdown.component.css'],
-    host: {
-        '(document:click)': 'onClickHideSelect($event)',
-        '(document:keydown)': 'onKeyboardSelectOption($event)'
-    },
     providers   : [
         {
             provide     : NG_VALUE_ACCESSOR,
@@ -50,6 +49,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
 
     filterOptionList: any = []
     optionListTemp: any = []
+
 
 
     constructor(
@@ -150,8 +150,8 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
     }
 
 
-    //点击选择框以外区域,select选择框隐藏, 并重置数据
-    onClickHideSelect(event: any) {
+    // 点击选择框以外区域,select选择框隐藏, 并重置数据
+    @HostListener('document:click', ['$event']) onClickHideSelect(event: any) {
 
         if (!this.optionsListEl.nativeElement.contains(event.target)) {
 
@@ -168,15 +168,15 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
         }
     }
 
-    //select 键盘事件
-    onKeyboardSelectOption(event: any) {
+    // select 键盘事件
+    @HostListener('document:keydown', ['$event']) onKeyboardSelectOption(event: any) {
 
         if ( this.isShowSelectOptionList) {
 
             const optionsLength = this.filterOptionList.length
 
             if ( event.keyCode === 40) {
-                //下
+                // 下
 
                 if ( this.currentSelectIndexByKeyboard < optionsLength - 1) {
                     this.currentSelectIndexByKeyboard ++
@@ -185,7 +185,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
                     this.currentSelectIndexByKeyboard = 0
                 }
             } else if (event.keyCode === 38) {
-                //上
+                // 上
 
                 if ( this.currentSelectIndexByKeyboard < 1) {
                     this.currentSelectIndexByKeyboard = optionsLength - 1
@@ -194,7 +194,7 @@ export class SelectDropdownComponent implements OnInit, OnChanges, ControlValueA
                 }
 
             } else if (event.keyCode === 13) {
-                //enter
+                // enter
 
                 if (this.currentSelectIndexByKeyboard === -1 ) {
                     this.clickOption({ id : -1 , name : ''})
