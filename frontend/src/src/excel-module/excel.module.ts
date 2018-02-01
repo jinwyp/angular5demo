@@ -13,12 +13,16 @@ import {AdminHomeComponent} from './components/adminHome/adminHome.component'
 
 import {DocumentDailyReportComponent} from './components/report/documentDailyReport/documentDailyReport.component'
 
+
+import {ShipAgencyComponent} from './components/supplier/shipAgency/shipAgency.component'
+
 import {OrderService} from './services/order.service'
 import {InMemOrderDataService} from './services/orderMock'
 
 
 const adminHomeRoutes: Routes = [
     {path : '', redirectTo : 'report1', pathMatch : 'full'},
+    {path : 'supplier/ship', component : ShipAgencyComponent},
     {path : 'report1', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
 ]
@@ -27,6 +31,8 @@ const adminHomeRoutes: Routes = [
 @NgModule({
     declarations : [
         AdminHomeComponent,
+
+        ShipAgencyComponent,
 
         DocumentDailyReportComponent
     ],

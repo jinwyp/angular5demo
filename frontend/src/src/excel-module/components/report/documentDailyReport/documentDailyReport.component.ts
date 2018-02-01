@@ -162,7 +162,7 @@ export class DocumentDailyReportComponent implements OnInit {
       error => {this.httpService.errorHandler(error) }
     )
 
-    this.orderService.getShipNames().subscribe(
+    this.orderService.getShips().subscribe(
       data => {
         this.shipNameList = data
       },

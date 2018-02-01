@@ -67,13 +67,13 @@
             <a data-toggle="collapse" href="#collapse2" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 2)" (mouseenter)="mouseEnterMenu($event, 2)">
                 <!--<div class="float-right badge badge-info">3</div>-->
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <span class="ml-2">当前用户管理</span>
+                <span class="ml-2">供应商管理</span>
             </a>
 
             <div class="collapse" [class.show]="menuList[2]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===2" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/info/basic" (click)="clickSubMenu(21)">基本信息</a> </li>
-                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(22)">修改密码</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/supplier/ship" (click)="clickSubMenu(21)">船只管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(22)">煤炭贸易商管理</a> </li>
                 </ul>
             </div>
         </div>
@@ -83,7 +83,7 @@
 
             <a data-toggle="collapse" href="#collapse3" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 3)" (mouseenter)="mouseEnterMenu($event, 3)">
                 <i class="fa fa-users" aria-hidden="true"></i>
-                <span class="ml-2">用户管理</span>
+                <span class="ml-2">报表管理</span>
             </a>
 
             <div class="collapse" [class.show]="menuList[3]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===3" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
@@ -94,19 +94,6 @@
         </div>
 
 
-        <div class="card" [class.active] = "currentMenu===4">
-
-            <a data-toggle="collapse" href="#collapse4" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 4)" (mouseenter)="mouseEnterMenu($event, 4)">
-                <i class="fa fa-jpy" aria-hidden="true"></i>
-                <span class="ml-2">订单管理</span>
-            </a>
-
-            <div class="collapse" [class.show]="menuList[4]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===4" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
-                <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/orders" (click)="clickSubMenu(41)">订单管理</a> </li>
-                </ul>
-            </div>
-        </div>
 
     </div>
 
