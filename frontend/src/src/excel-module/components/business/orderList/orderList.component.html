@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h3 class="mt-4 mb-4">
-                {{ isCCSTrader ? 'CCS贸易商管理' : '贸易商,矿场和电厂管理'}}
+                港口管理
                 <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
             </h3>
         </div>
@@ -15,14 +15,13 @@
 
     <div class="row" *ngIf="isShowForm">
         <div class="col">
-            <form [formGroup]="traderForm" (keydown.enter)="$event.preventDefault()" >
+            <form [formGroup]="harborForm" (keydown.enter)="$event.preventDefault()" >
 
-                <bs-text-input formControlName="name" [fc]="traderForm.get('name')" [type]="'text'" [label]="'公司名称:'" [dirty]="ignoreDirty" [error]="traderFormError.name"></bs-text-input>
-                <bs-select formControlName ="traderType" [fc]="traderForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [error]="traderFormError.traderType" [hidden]="isCCSTrader"></bs-select>
+                <bs-text-input formControlName="name" [fc]="harborForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="harborFormError.name"></bs-text-input>
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="traderFormSubmit()">保存</button>
+                        <button type="button" class="btn btn-info " (click)="harborFormSubmit()">保存</button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)">返回</button>
                     </div>
                 </div>
@@ -34,14 +33,11 @@
     <div class="row" *ngIf="!isShowForm">
 
         <div class="col">
-            <form [formGroup]="traderSearchForm" (keydown.enter)="$event.preventDefault()">
+            <form [formGroup]="harborSearchForm" (keydown.enter)="$event.preventDefault()">
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="traderSearchForm.get('name')" [type]="'text'" [label]="'公司名称:'" ></bs-text-input>
-                    </div>
-                    <div class="col-6">
-                        <bs-select formControlName ="traderType" [fc]="traderSearchForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [addAllOptions]="true" [hidden]="isCCSTrader"></bs-select>
+                        <bs-text-input formControlName="name" [fc]="harborSearchForm.get('name')" [type]="'text'" [label]="'港口名称:'" ></bs-text-input>
                     </div>
                 </div>
 
@@ -59,7 +55,7 @@
 
                 <div class="form-group row">
                     <div class="col-11 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="getTraderList()">查询</button>
+                        <button type="button" class="btn btn-info " (click)="getShipList()">查询</button>
                     </div>
                 </div>
             </form>
@@ -69,16 +65,14 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>公司名称</th>
-                    <th>类型</th>
+                    <th>港口名称</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ship of traderList; trackBy: trackByFn">
+                    <tr *ngFor="let ship of harborList; trackBy: trackByFn">
                         <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
                         <td> {{ship.name }}</td>
-                        <td> {{ship.traderType | findKey : traderTypeAllList : 'name'  }}</td>
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>

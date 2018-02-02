@@ -98,31 +98,51 @@
         </div>
 
 
+
         <div class="card" [class.active] = "currentMenu===4">
 
             <a data-toggle="collapse" href="#collapse4" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 4)" (mouseenter)="mouseEnterMenu($event, 4)">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                <span class="ml-2">业务管理</span>
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span class="ml-2">瑞茂通员工管理</span>
             </a>
 
             <div class="collapse" [class.show]="menuList[4]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===4" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/dict/coaltype" (click)="clickSubMenu(41)">业务线管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/ccs/user" (click)="clickSubMenu(41)">员工管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/ccs/department" (click)="clickSubMenu(42)">部门管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/ccs/team" (click)="clickSubMenu(43)">业务团队管理</a> </li>
                 </ul>
             </div>
         </div>
 
 
+
+
         <div class="card" [class.active] = "currentMenu===5">
 
             <a data-toggle="collapse" href="#collapse5" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 5)" (mouseenter)="mouseEnterMenu($event, 5)">
-                <i class="fa fa-table" aria-hidden="true"></i>
-                <span class="ml-2">报表管理</span>
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <span class="ml-2">业务管理</span>
             </a>
 
             <div class="collapse" [class.show]="menuList[5]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===5" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/report/daily" (click)="clickSubMenu(51)">国际煤炭运营日报</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/dict/coaltype" (click)="clickSubMenu(51)">业务线管理</a> </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="card" [class.active] = "currentMenu===6">
+
+            <a data-toggle="collapse" href="#collapse6" role="tab" aria-expanded="true" aria-controls="collapseOne" (click)="clickMenu($event, 6)" (mouseenter)="mouseEnterMenu($event, 6)">
+                <i class="fa fa-table" aria-hidden="true"></i>
+                <span class="ml-2">报表管理</span>
+            </a>
+
+            <div class="collapse" [class.show]="menuList[6]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===6" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
+                <ul class="list-group">
+                    <li routerLinkActive="active" > <a routerLink="/report/daily" (click)="clickSubMenu(61)">国际煤炭运营日报</a> </li>
                 </ul>
             </div>
         </div>

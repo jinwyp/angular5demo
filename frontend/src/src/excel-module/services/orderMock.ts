@@ -118,7 +118,10 @@ export class InMemOrderDataService implements InMemoryDbService {
             {id : 18, name : '广州发展', traderType : 'TRADER', company : ''},
             {id : 19, name : '神华', traderType : 'TRADER', company : ''},
             {id : 20, name : '蒙华', traderType : 'TRADER', company : ''},
-            {id : 21, name : '岳阳港源', traderType : 'TRADER', company : ''}
+            {id : 21, name : '岳阳港源', traderType : 'TRADER', company : ''},
+            {id : 41, name : '华能海南', traderType : 'POWERPLANT', company : ''},
+            {id : 42, name : '华能金陵', traderType : 'POWERPLANT', company : ''},
+
         ]
 
         const tradersLocal = localStorage.getItem('traders')
@@ -130,7 +133,7 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
         let ccs: any[] = [
-            {id : 1, name : '开发公司', traderType : 'CCSTRADER', company : ''},
+            {id : 1, name : '开发公司', traderType : 'CCSTRADER', company : '', },
             {id : 2, name : '印尼公司', traderType : 'CCSTRADER', company : ''},
             {id : 3, name : '华南公司', traderType : 'CCSTRADER', company : ''},
             {id : 4, name : '华南公司', traderType : 'CCSTRADER', company : ''}
@@ -140,6 +143,12 @@ export class InMemOrderDataService implements InMemoryDbService {
         if (ccsLocal) {
             ccs = JSON.parse(ccsLocal)
         }
+
+
+
+
+
+
 
 
 
@@ -162,6 +171,52 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
+
+        let departments = [
+            {id : 1, name : '金融产品事业部'},
+            {id : 2, name : '国内煤炭事业部'}
+
+        ]
+
+        const departmentsLocal = localStorage.getItem('departments')
+        if (departmentsLocal) {
+            departments = JSON.parse(departmentsLocal)
+        }
+
+
+        let teams = [
+            {id : 1, name : '赵善文团队'},
+            {id : 2, name : '张培栓团队'},
+            {id : 3, name : '魏靖团队'},
+            {id : 4, name : '卢昆团队'},
+            {id : 5, name : '赵善文团队'},
+            {id : 6, name : '赵悝团队'},
+            {id : 7, name : '余东升团队'},
+            {id : 8, name : '孔光明团队'},
+            {id : 9, name : '张超超团队'},
+            {id : 10, name : '宁夏自营分公司'},
+            {id : 11, name : '钢材金融分公司'},
+            {id : 12, name : '赵孟晓团队'},
+            {id : 13, name : '陈璐团队'},
+            {id : 14, name : '杨邓团队'},
+            {id : 15, name : '田雪冬团队'},
+            {id : 16, name : '冷链团队'}
+        ]
+
+        const teamsLocal = localStorage.getItem('teams')
+        if (teamsLocal) {
+            teams = JSON.parse(teamsLocal)
+        }
+
+        let users = []
+
+        const usersLocal = localStorage.getItem('users')
+        if (usersLocal) {
+            users = JSON.parse(usersLocal)
+        }
+
+
+
         let orders = []
 
         const ordersLocal = localStorage.getItem('orders')
@@ -173,6 +228,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {orders, shipAgencies, ships, harbors, traders, ccs, coalType, businessNames}
+        return {departments, teams, users, orders, shipAgencies, ships, harbors, traders, ccs, coalType, businessNames}
     }
 }

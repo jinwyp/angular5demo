@@ -74,15 +74,7 @@ export class ShipManagementComponent implements OnInit {
 
     getShipAgencyList(event?: any) {
 
-        let query: any = {
-            pageSize : this.pagination.pageSize,
-            pageNo   : this.pagination.pageNo
-        }
-
-        query = (<any>Object).assign(query, this.shipSearchForm.value)
-
-        console.log(query)
-        this.orderService.getShipAgencies(query).subscribe(
+        this.orderService.getShipAgencies({}).subscribe(
             data => { this.shipAgencyList = data},
             error => { this.httpService.errorHandler(error)}
         )

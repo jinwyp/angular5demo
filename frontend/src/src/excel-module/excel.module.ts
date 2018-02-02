@@ -20,7 +20,18 @@ import {HarborManagementComponent} from './components/supplier/harborManagement/
 import {TraderManagementComponent} from './components/supplier/traderManagement/traderManagement.component'
 
 
-import {CoalTypeDictinaryComponent} from './components/dict/coalTypeDictionary/coalTypeDictionary.component'
+import {CoalTypeDictinaryComponent} from './components/dictionary/coalTypeDictionary/coalTypeDictionary.component'
+
+
+import {DepartmentManagementComponent} from './components/cssuser/departmentManagement/departmentManagement.component'
+import {TeamManagementComponent} from './components/cssuser/teamManagement/teamManagement.component'
+import {UserManagementComponent} from './components/cssuser/userManagement/userManagement.component'
+
+
+import {OrderListComponent} from './components/business/orderList/orderList.component'
+
+
+
 
 import {OrderService} from './services/order.service'
 import {InMemOrderDataService} from './services/orderMock'
@@ -33,6 +44,11 @@ const adminHomeRoutes: Routes = [
     {path : 'supplier/harbor', component : HarborManagementComponent},
     {path : 'supplier/trader', component : TraderManagementComponent, data : {isCCSTrader : false}},
     {path : 'supplier/ccstrader', component : TraderManagementComponent, data : {isCCSTrader : true}},
+
+    {path : 'ccs/department', component : DepartmentManagementComponent},
+    {path : 'ccs/team', component : TeamManagementComponent},
+    {path : 'ccs/user', component : UserManagementComponent},
+
 
     {path : 'dict/coaltype', component : CoalTypeDictinaryComponent},
 
@@ -50,6 +66,11 @@ const adminHomeRoutes: Routes = [
         ShipManagementComponent,
         HarborManagementComponent,
         TraderManagementComponent,
+
+
+        DepartmentManagementComponent,
+        TeamManagementComponent,
+        UserManagementComponent,
 
 
         CoalTypeDictinaryComponent,
