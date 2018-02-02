@@ -75,8 +75,8 @@
                     <li routerLinkActive="active" > <a routerLink="/supplier/shipAgency" (click)="clickSubMenu(21)">船只代理公司</a> </li>
                     <li routerLinkActive="active" > <a routerLink="/supplier/ship" (click)="clickSubMenu(22)">船只管理</a> </li>
                     <li routerLinkActive="active" > <a routerLink="/supplier/harbor" (click)="clickSubMenu(23)">港口管理</a> </li>
-                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(23)">煤炭贸易商管理</a> </li>
-                    <li routerLinkActive="active"> <a routerLink="/info/password" (click)="clickSubMenu(24)">CSS贸易公司管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/supplier/trader" (click)="clickSubMenu(23)">煤炭贸易商管理</a> </li>
+                    <li routerLinkActive="active"> <a routerLink="/supplier/ccstrader" (click)="clickSubMenu(24)">CSS贸易公司管理</a> </li>
                 </ul>
             </div>
         </div>
@@ -91,7 +91,7 @@
 
             <div class="collapse" [class.show]="menuList[3]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===3" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
-                    <li routerLinkActive="active" > <a routerLink="/users" (click)="clickSubMenu(31)">用户管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/report/daily" (click)="clickSubMenu(31)">国际煤炭运营日报</a> </li>
                 </ul>
             </div>
         </div>

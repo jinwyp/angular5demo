@@ -40,7 +40,7 @@ export class ShipManagementComponent implements OnInit {
         'name' : {
             'required' : '请填写船只中文名称!'
         },
-        'shipName'     : {
+        'englishName'     : {
             'required' : '请填写船只英文名称!'
         },
         'company' : {

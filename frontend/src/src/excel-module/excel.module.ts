@@ -16,6 +16,7 @@ import {DocumentDailyReportComponent} from './components/report/documentDailyRep
 
 import {ShipAgencyComponent} from './components/supplier/shipAgency/shipAgency.component'
 import {ShipManagementComponent} from './components/supplier/shipManagement/shipManagement.component'
+import {HarborManagementComponent} from './components/supplier/harborManagement/harborManagement.component'
 
 import {OrderService} from './services/order.service'
 import {InMemOrderDataService} from './services/orderMock'
@@ -25,8 +26,9 @@ const adminHomeRoutes: Routes = [
     {path : '', redirectTo : 'report1', pathMatch : 'full'},
     {path : 'supplier/shipAgency', component : ShipAgencyComponent},
     {path : 'supplier/ship', component : ShipManagementComponent},
+    {path : 'supplier/harbor', component : HarborManagementComponent},
 
-    {path : 'report1', component : DocumentDailyReportComponent},
+    {path : 'report/daily', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
 ]
 
@@ -37,6 +39,7 @@ const adminHomeRoutes: Routes = [
 
         ShipAgencyComponent,
         ShipManagementComponent,
+        HarborManagementComponent,
 
         DocumentDailyReportComponent
     ],

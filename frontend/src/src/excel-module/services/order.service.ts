@@ -63,8 +63,8 @@ export class OrderService {
     getOrders(query?: any): Observable<any[]> {
 
         let params = new HttpParams()
-            .set('pageSize', query.pageSize)
-            .set('pageNo', query.pageNo)
+            // .set('pageSize', query.pageSize)
+            // .set('pageNo', query.pageNo)
 
         if (query.businessName) {params = params.append('businessName', query.businessName)}
         if (query.shipName) {params = params.append('shipName', query.shipName)}
@@ -129,13 +129,12 @@ export class OrderService {
 
     getShips(query?: any): Observable<any[]> {
         let params = new HttpParams()
-            .set('pageSize', query.pageSize)
-            .set('pageNo', query.pageNo)
 
-        if (query.businessName) { params = params.append('businessName', query.businessName) }
-        if (query.shipName) { params = params.append('shipName', query.shipName)}
+        if (query.name) { params = params.append('name', query.name) }
+        if (query.englishName) { params = params.append('englishName', query.englishName)}
+        if (query.company) { params = params.append('company', query.company)}
 
-        return this.http.get<any[]>(this.urlApi + '/ships')
+        return this.http.get<any[]>(this.urlApi + '/ships', {params : params})
             .pipe(
                 tap(results => {
                     this.saveLocalStorage('ships', results)
@@ -150,7 +149,7 @@ export class OrderService {
 
         return this.http.get<any>(url)
             .pipe(
-                tap(order => console.log(`getShipById id=${id}: `, order)),
+                tap(result => console.log(`getShipById id=${id}: `, result)),
                 catchError(this.handleError<any>(`getOrderById id=${id}`))
             )
     }
@@ -186,13 +185,10 @@ export class OrderService {
 
     getShipAgencies(query?: any): Observable<any[]> {
         let params = new HttpParams()
-            .set('pageSize', query.pageSize)
-            .set('pageNo', query.pageNo)
 
-        if (query.businessName) { params = params.append('businessName', query.businessName) }
-        if (query.shipName) { params = params.append('shipName', query.shipName)}
+        if (query.name) { params = params.append('name', query.name) }
 
-        return this.http.get<any[]>(this.urlApi + '/shipAgencies')
+        return this.http.get<any[]>(this.urlApi + '/shipAgencies', {params : params})
             .pipe(
                 tap(results => {
                     this.saveLocalStorage('shipAgencies', results)
@@ -207,7 +203,7 @@ export class OrderService {
 
         return this.http.get<any>(url)
             .pipe(
-                tap(ShipAgency => console.log(`getShipAgencyById id=${id}: `, ShipAgency)),
+                tap(result => console.log(`getShipAgencyById id=${id}: `, result)),
                 catchError(this.handleError<any>(`getShipAgencyById id=${id}`))
             )
     }
@@ -235,6 +231,62 @@ export class OrderService {
             .pipe(
                 tap(result => console.log(`deleteShipAgency id=${id}`, result)),
                 catchError(this.handleError<any>('deleteShipAgency'))
+            )
+    }
+
+
+
+
+
+
+    getHarbors(query?: any): Observable<any[]> {
+        let params = new HttpParams()
+
+        if (query.name) { params = params.append('name', query.name) }
+
+        return this.http.get<any[]>(this.urlApi + '/harbors', {params : params})
+            .pipe(
+                tap(results => {
+                    this.saveLocalStorage('harbors', results)
+                    console.log(`getHarbors: `, results)
+                }),
+                catchError(this.handleError<any>('getHarbors', []))
+            )
+    }
+
+    getHarborById(id: number): Observable<any> {
+        const url = `${this.urlApi}/harbors/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(result => console.log(`getHarborById id=${id}: `, result)),
+                catchError(this.handleError<any>(`getHarborById id=${id}`))
+            )
+    }
+
+    addHarbor(Harbor: any): Observable<any> {
+        return this.http.post<any>(this.urlApi + '/harbors', Harbor, httpOptions)
+            .pipe(
+                tap((result) => console.log(`addHarbor id=${Harbor.id}: `, result)),
+                catchError(this.handleError<any>('addHarbor'))
+            )
+    }
+
+    updateHarbor(Harbor: any): Observable<any> {
+        return this.http.put(this.urlApi + '/harbors', Harbor, httpOptions)
+            .pipe(
+                tap(result => console.log(`updateHarbor id=${Harbor.id}: `, result)),
+                catchError(this.handleError<any>('updateHarbor'))
+            )
+    }
+
+    deleteHarbor(Harbor: any | number): Observable<any> {
+        const id = typeof Harbor === 'number' ? Harbor : Harbor.id
+
+        return this.http.delete<any>(`${this.urlApi}/harbors/${id}: `, httpOptions)
+            .pipe(
+                tap(result => console.log(`deleteHarbor id=${id}`, result)),
+                catchError(this.handleError<any>('deleteHarbor'))
             )
     }
 }

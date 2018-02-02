@@ -37,7 +37,7 @@ export class InMemOrderDataService implements InMemoryDbService {
             {id : 11, name : '台荣', englishName : 'MV TAI PRIZE', company : ''},
             {id : 12, name : '宏凯', englishName : 'MV.HONG KAI', company : ''},
             {id : 13, name : '明州36', englishName : '', company : ''},
-            {id : 14, name : '德勤88', englishName : '/', company : ''},
+            {id : 14, name : '德勤88', englishName : '', company : ''},
             {id : 15, name : '高速', englishName : 'MV.HIGH SPEED', company : ''},
             {id : 16, name : '海狮', englishName : 'MV.NINGBO SEA LION', company : ''},
             {id : 17, name : '埃托利亚', englishName : 'MV.AETOLIA', company : ''},
@@ -51,7 +51,6 @@ export class InMemOrderDataService implements InMemoryDbService {
         ]
 
         const shipsLocal = localStorage.getItem('ships')
-
         if (shipsLocal) {
             ships = JSON.parse(shipsLocal)
         }
@@ -62,9 +61,37 @@ export class InMemOrderDataService implements InMemoryDbService {
         let shipAgencies = []
 
         const shipAgenciesLocal = localStorage.getItem('shipAgencies')
-
         if (shipAgenciesLocal) {
             shipAgencies = JSON.parse(shipAgenciesLocal)
+        }
+
+
+
+
+        let harbors: any[] = [
+            {id : 1, name : 'TANJUNG BARA,INDONESIA', englishName : 'TANJUNG BARA,INDONESIA', company : ''},
+            {id : 2, name : 'TANJUNG PEMANCINGAN, INDONESIA', englishName : 'TANJUNG PEMANCINGAN, INDONESIA', company : ''},
+            {id : 3, name : 'SEMIRARA, PHILIPINES', englishName : 'SEMIRARA, PHILIPINES', company : ''},
+            {id : 4, name : 'MUARA SATUI,INDONESIA', englishName : 'MUARA SATUI,INDONESIA', company : ''},
+            {id : 5, name : 'SAMARINDA,INDONESIA', englishName : 'SAMARINDA,INDONESIA', company : ''},
+            {id : 6, name : 'ABBOT POINT,AUSTRALIA', englishName : 'ABBOT POINT,AUSTRALIA', company : ''},
+            {id : 7, name : 'BUNATI, INDONESIA', englishName : 'BUNATI, INDONESIA', company : ''},
+            {id : 8, name : 'ASAM ASAM, INDONESIA', englishName : 'ASAM ASAM, INDONESIA', company : ''},
+            {id : 9, name : 'Muara Banyuasin, Indonesia', englishName : 'Muara Banyuasin, Indonesia', company : ''},
+            {id : 10, name : 'Muara Berau, INDONESIA', englishName : 'Muara Berau, INDONESIA', company : ''},
+            {id : 11, name : 'Taboneo, Indonesia', englishName : 'Taboneo, Indonesia', company : ''},
+            {id : 12, name : 'Tanjung Buyut,Indonesia', englishName : 'Tanjung Buyut,Indonesia', company : ''},
+            {id : 13, name : '京唐港', englishName : '', company : ''},
+            {id : 14, name : '黄骅港', englishName : '', company : ''},
+            {id : 15, name : '济源站', englishName : '', company : ''},
+            {id : 16, name : '甲方指定', englishName : '', company : ''},
+            {id : 17, name : '曹妃甸', englishName : '', company : ''},
+            {id : 18, name : '盈利港', englishName : '', company : ''}
+        ]
+
+        const harborsLocal = localStorage.getItem('harbors')
+        if (harborsLocal) {
+            harbors = JSON.parse(harborsLocal)
         }
 
 
@@ -73,7 +100,6 @@ export class InMemOrderDataService implements InMemoryDbService {
         let orders = []
 
         const ordersLocal = localStorage.getItem('orders')
-
         if (ordersLocal) {
             orders = JSON.parse(ordersLocal)
         }
@@ -82,6 +108,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {orders, shipAgencies, ships, businessNames}
+        return {orders, shipAgencies, ships, harbors, businessNames}
     }
 }

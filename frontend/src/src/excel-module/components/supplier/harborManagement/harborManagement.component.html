@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h3 class="mt-4 mb-4">
-                船只管理
+                港口管理
                 <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
             </h3>
         </div>
@@ -15,16 +15,13 @@
 
     <div class="row" *ngIf="isShowForm">
         <div class="col">
-            <form [formGroup]="shipForm" (keydown.enter)="$event.preventDefault()" >
+            <form [formGroup]="harborForm" (keydown.enter)="$event.preventDefault()" >
 
-                <bs-text-input formControlName="name" [fc]="shipForm.get('name')" [type]="'text'" [label]="'船只中文名称:'" [dirty]="ignoreDirty" [error]="shipFormError.name"></bs-text-input>
-                <bs-text-input formControlName="englishName" [fc]="shipForm.get('englishName')" [type]="'text'" [label]="'船只英文名称:'" [dirty]="ignoreDirty" [error]="shipFormError.englishName"></bs-text-input>
-                <bs-select formControlName ="company" [fc]="shipForm.get('company')" [label]="'船只所属公司:'" [labelclass]="'col-2'" [options]="shipAgencyList" [dirty]="ignoreDirty" [error]="shipFormError.company" ></bs-select>
-
+                <bs-text-input formControlName="name" [fc]="harborForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="harborFormError.name"></bs-text-input>
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="shipFormSubmit()">保存</button>
+                        <button type="button" class="btn btn-info " (click)="harborFormSubmit()">保存</button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)">返回</button>
                     </div>
                 </div>
@@ -36,14 +33,11 @@
     <div class="row" *ngIf="!isShowForm">
 
         <div class="col">
-            <form [formGroup]="shipSearchForm" (keydown.enter)="$event.preventDefault()">
+            <form [formGroup]="harborSearchForm" (keydown.enter)="$event.preventDefault()">
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="shipSearchForm.get('name')" [type]="'text'" [label]="'船中文名称:'" [labelclass]="'col-2'"></bs-text-input>
-                    </div>
-                    <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="shipSearchForm.get('englishName')" [type]="'text'" [label]="'船英文名称:'" [labelclass]="'col-2'"></bs-text-input>
+                        <bs-text-input formControlName="name" [fc]="harborSearchForm.get('name')" [type]="'text'" [label]="'港口名称:'" ></bs-text-input>
                     </div>
                 </div>
 
@@ -71,18 +65,14 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>船只中文名称</th>
-                    <th>船只英文名称</th>
-                    <th>船只所属公司</th>
+                    <th>港口名称</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ship of shipList; trackBy: trackByFn">
+                    <tr *ngFor="let ship of harborList; trackBy: trackByFn">
                         <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
                         <td> {{ship.name }}</td>
-                        <td> {{ship.englishName }}</td>
-                        <td> {{ship.company | findKey : shipAgencyList : 'name'}}</td>
 
                         <td>
                             <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>
