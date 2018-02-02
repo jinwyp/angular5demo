@@ -289,4 +289,115 @@ export class OrderService {
                 catchError(this.handleError<any>('deleteHarbor'))
             )
     }
+
+
+
+
+
+    getTraders(query?: any): Observable<any[]> {
+        let params = new HttpParams()
+
+        if (query.name) { params = params.append('name', query.name) }
+
+        return this.http.get<any[]>(this.urlApi + '/traders', {params : params})
+            .pipe(
+                tap(results => {
+                    this.saveLocalStorage('traders', results)
+                    console.log(`getTraders: `, results)
+                }),
+                catchError(this.handleError<any>('getTraders', []))
+            )
+    }
+
+    getTraderById(id: number): Observable<any> {
+        const url = `${this.urlApi}/traders/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(result => console.log(`getTraderById id=${id}: `, result)),
+                catchError(this.handleError<any>(`getTraderById id=${id}`))
+            )
+    }
+
+    addTrader(Trader: any): Observable<any> {
+        return this.http.post<any>(this.urlApi + '/traders', Trader, httpOptions)
+            .pipe(
+                tap((result) => console.log(`addTrader id=${Trader.id}: `, result)),
+                catchError(this.handleError<any>('addTrader'))
+            )
+    }
+
+    updateTrader(Trader: any): Observable<any> {
+        return this.http.put(this.urlApi + '/traders', Trader, httpOptions)
+            .pipe(
+                tap(result => console.log(`updateTrader id=${Trader.id}: `, result)),
+                catchError(this.handleError<any>('updateTrader'))
+            )
+    }
+
+    deleteTrader(Trader: any | number): Observable<any> {
+        const id = typeof Trader === 'number' ? Trader : Trader.id
+
+        return this.http.delete<any>(`${this.urlApi}/traders/${id}: `, httpOptions)
+            .pipe(
+                tap(result => console.log(`deleteTrader id=${id}`, result)),
+                catchError(this.handleError<any>('deleteTrader'))
+            )
+    }
+
+
+
+
+
+    getCCSTraders(query?: any): Observable<any[]> {
+        let params = new HttpParams()
+
+        if (query.name) { params = params.append('name', query.name) }
+
+        return this.http.get<any[]>(this.urlApi + '/ccs', {params : params})
+            .pipe(
+                tap(results => {
+                    this.saveLocalStorage('ccs', results)
+                    console.log(`getCCSTraders: `, results)
+                }),
+                catchError(this.handleError<any>('getCCSTraders', []))
+            )
+    }
+
+    getCCSTraderById(id: number): Observable<any> {
+        const url = `${this.urlApi}/ccs/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(result => console.log(`getCCSTraderById id=${id}: `, result)),
+                catchError(this.handleError<any>(`getCCSTraderById id=${id}`))
+            )
+    }
+
+    addCCSTrader(CCSTrader: any): Observable<any> {
+        return this.http.post<any>(this.urlApi + '/ccs', CCSTrader, httpOptions)
+            .pipe(
+                tap((result) => console.log(`addCCSTrader id=${CCSTrader.id}: `, result)),
+                catchError(this.handleError<any>('addCCSTrader'))
+            )
+    }
+
+    updateCCSTrader(CCSTrader: any): Observable<any> {
+        return this.http.put(this.urlApi + '/ccs', CCSTrader, httpOptions)
+            .pipe(
+                tap(result => console.log(`updateCCSTrader id=${CCSTrader.id}: `, result)),
+                catchError(this.handleError<any>('updateCCSTrader'))
+            )
+    }
+
+    deleteCCSTrader(CCSTrader: any | number): Observable<any> {
+        const id = typeof CCSTrader === 'number' ? CCSTrader : CCSTrader.id
+
+        return this.http.delete<any>(`${this.urlApi}/ccs/${id}: `, httpOptions)
+            .pipe(
+                tap(result => console.log(`deleteCCSTrader id=${id}`, result)),
+                catchError(this.handleError<any>('deleteCCSTrader'))
+            )
+    }
+
 }

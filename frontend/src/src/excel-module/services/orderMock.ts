@@ -97,6 +97,52 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
+        let traders: any[] = [
+            {id : 1, name : 'KPC', traderType : 'TRADER', company : ''},
+            {id : 2, name : 'Jhonlin', traderType : 'TRADER', company : ''},
+            {id : 3, name : 'SEMIRARA', traderType : 'TRADER', company : ''},
+            {id : 4, name : '巴彦', traderType : 'TRADER', company : ''},
+            {id : 5, name : '中石化', traderType : 'TRADER', company : ''},
+            {id : 6, name : '河北物流', traderType : 'TRADER', company : ''},
+            {id : 7, name : '青岛中兖', traderType : 'TRADER', company : ''},
+            {id : 8, name : '金光', traderType : 'TRADER', company : ''},
+            {id : 9, name : 'SSDK', traderType : 'TRADER', company : ''},
+            {id : 10, name : '广州珠电', traderType : 'TRADER', company : ''},
+            {id : 11, name : '渤港物贸', traderType : 'TRADER', company : ''},
+            {id : 12, name : 'JL', traderType : 'TRADER', company : ''},
+            {id : 13, name : 'PCN', traderType : 'TRADER', company : ''},
+            {id : 14, name : 'MAC', traderType : 'TRADER', company : ''},
+            {id : 15, name : 'AJE', traderType : 'TRADER', company : ''},
+            {id : 16, name : 'BMB', traderType : 'TRADER', company : ''},
+            {id : 17, name : 'TER', traderType : 'TRADER', company : ''},
+            {id : 18, name : '广州发展', traderType : 'TRADER', company : ''},
+            {id : 19, name : '神华', traderType : 'TRADER', company : ''},
+            {id : 20, name : '蒙华', traderType : 'TRADER', company : ''},
+            {id : 21, name : '岳阳港源', traderType : 'TRADER', company : ''}
+        ]
+
+        const tradersLocal = localStorage.getItem('traders')
+        if (tradersLocal) {
+            traders = JSON.parse(tradersLocal)
+        }
+
+
+
+
+        let ccs: any[] = [
+            {id : 1, name : '开发公司', traderType : 'CCSTRADER', company : ''},
+            {id : 2, name : '印尼公司', traderType : 'CCSTRADER', company : ''},
+            {id : 3, name : '华南公司', traderType : 'CCSTRADER', company : ''},
+            {id : 4, name : '华南公司', traderType : 'CCSTRADER', company : ''}
+        ]
+
+        const ccsLocal = localStorage.getItem('ccs')
+        if (ccsLocal) {
+            ccs = JSON.parse(ccsLocal)
+        }
+
+
+
         let orders = []
 
         const ordersLocal = localStorage.getItem('orders')
@@ -108,6 +154,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {orders, shipAgencies, ships, harbors, businessNames}
+        return {orders, shipAgencies, ships, harbors, traders, ccs, businessNames}
     }
 }

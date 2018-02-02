@@ -17,6 +17,7 @@ import {DocumentDailyReportComponent} from './components/report/documentDailyRep
 import {ShipAgencyComponent} from './components/supplier/shipAgency/shipAgency.component'
 import {ShipManagementComponent} from './components/supplier/shipManagement/shipManagement.component'
 import {HarborManagementComponent} from './components/supplier/harborManagement/harborManagement.component'
+import {TraderManagementComponent} from './components/supplier/traderManagement/traderManagement.component'
 
 import {OrderService} from './services/order.service'
 import {InMemOrderDataService} from './services/orderMock'
@@ -27,10 +28,13 @@ const adminHomeRoutes: Routes = [
     {path : 'supplier/shipAgency', component : ShipAgencyComponent},
     {path : 'supplier/ship', component : ShipManagementComponent},
     {path : 'supplier/harbor', component : HarborManagementComponent},
+    {path : 'supplier/trader', component : TraderManagementComponent, data : {isCCSTrader : false}},
+    {path : 'supplier/ccstrader', component : TraderManagementComponent, data : {isCCSTrader : true}},
 
     {path : 'report/daily', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
 ]
+
 
 
 @NgModule({
@@ -40,6 +44,7 @@ const adminHomeRoutes: Routes = [
         ShipAgencyComponent,
         ShipManagementComponent,
         HarborManagementComponent,
+        TraderManagementComponent,
 
         DocumentDailyReportComponent
     ],
