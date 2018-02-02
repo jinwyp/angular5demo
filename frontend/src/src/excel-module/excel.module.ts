@@ -19,6 +19,9 @@ import {ShipManagementComponent} from './components/supplier/shipManagement/ship
 import {HarborManagementComponent} from './components/supplier/harborManagement/harborManagement.component'
 import {TraderManagementComponent} from './components/supplier/traderManagement/traderManagement.component'
 
+
+import {CoalTypeDictinaryComponent} from './components/dict/coalTypeDictionary/coalTypeDictionary.component'
+
 import {OrderService} from './services/order.service'
 import {InMemOrderDataService} from './services/orderMock'
 
@@ -30,6 +33,8 @@ const adminHomeRoutes: Routes = [
     {path : 'supplier/harbor', component : HarborManagementComponent},
     {path : 'supplier/trader', component : TraderManagementComponent, data : {isCCSTrader : false}},
     {path : 'supplier/ccstrader', component : TraderManagementComponent, data : {isCCSTrader : true}},
+
+    {path : 'dict/coaltype', component : CoalTypeDictinaryComponent},
 
     {path : 'report/daily', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
@@ -45,6 +50,9 @@ const adminHomeRoutes: Routes = [
         ShipManagementComponent,
         HarborManagementComponent,
         TraderManagementComponent,
+
+
+        CoalTypeDictinaryComponent,
 
         DocumentDailyReportComponent
     ],

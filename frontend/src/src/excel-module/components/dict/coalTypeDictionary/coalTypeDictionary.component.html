@@ -1,0 +1,90 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div class="container-fluid">
+    <!-- Content here -->
+
+    <div class="row">
+        <div class="col">
+            <h3 class="mt-4 mb-4">
+                煤种管理
+                <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
+            </h3>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="isShowForm">
+        <div class="col">
+            <form [formGroup]="coalTypeForm" (keydown.enter)="$event.preventDefault()" >
+
+                <bs-text-input formControlName="name" [fc]="coalTypeForm.get('name')" [type]="'text'" [label]="'煤种名称:'" [dirty]="ignoreDirty" [error]="coalTypeFormError.name"></bs-text-input>
+
+                <div class="form-group row">
+                    <div class="col-10 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="harborFormSubmit()">保存</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="!isShowForm">
+
+        <div class="col">
+            <form [formGroup]="coalTypeSearchForm" (keydown.enter)="$event.preventDefault()">
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-text-input formControlName="name" [fc]="coalTypeSearchForm.get('name')" [type]="'text'" [label]="'煤种名称:'" ></bs-text-input>
+                    </div>
+                </div>
+
+                <!--<div class="form-row ">-->
+                <!--<div class="col-3">-->
+                <!--<bs-datepicker formControlName="createDateStart" [fc]="orderSearchForm.get('createDateStart')" [label]="'创建时间:'" [labelclass]="'col-4'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>-->
+                <!--</div>-->
+                <!--<div class="col-3">-->
+                <!--<bs-datepicker formControlName="createDateEnd" [fc]="orderSearchForm.get('createDateEnd')" [label]="'至:'" [labelclass]="'col-1'" [inputclass]="'col-7'" [format]="'yyyy-mm-dd hh:MM:ss'"></bs-datepicker>-->
+                <!--</div>-->
+                <!--<div class="col-6">-->
+                <!--<bs-select formControlName ="status" [fc]="orderSearchForm.get('status')" [label]="'状态:'" [options]="orderStatusList" [addAllOptions]="true"></bs-select>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="form-group row">
+                    <div class="col-11 ml-auto">
+                        <button type="button" class="btn btn-info " (click)="getCoalTypeList()">查询</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>煤种名称</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ship of coalTypeList; trackBy: trackByFn">
+                        <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
+                        <td> {{ship.name }}</td>
+
+                        <td>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(ship)"> 删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+

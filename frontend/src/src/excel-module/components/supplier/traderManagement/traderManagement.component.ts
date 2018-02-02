@@ -33,6 +33,7 @@ export class TraderManagementComponent implements OnInit {
         {id : 'TRADER', name : '贸易商'},
         {id : 'MINE', name : '煤炭矿方'},
         {id : 'CCSTRADER', name : 'CCS贸易商'},
+        {id : 'CCSTRADER', name : '电厂'},
     ]
 
 

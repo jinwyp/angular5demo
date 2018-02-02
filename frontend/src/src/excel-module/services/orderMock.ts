@@ -143,6 +143,25 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
+
+
+        let coalType: any[] = [
+            {id : 1, name : '印尼煤'},
+            {id : 2, name : '菲律宾煤'},
+            {id : 3, name : '澳洲煤'},
+            {id : 4, name : '内贸煤'},
+            {id : 5, name : '山西优混'}
+        ]
+
+        const coalTypeLocal = localStorage.getItem('coaltype')
+        if (coalTypeLocal) {
+            coalType = JSON.parse(coalTypeLocal)
+        }
+
+
+
+
+
         let orders = []
 
         const ordersLocal = localStorage.getItem('orders')
@@ -154,6 +173,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {orders, shipAgencies, ships, harbors, traders, ccs, businessNames}
+        return {orders, shipAgencies, ships, harbors, traders, ccs, coalType, businessNames}
     }
 }

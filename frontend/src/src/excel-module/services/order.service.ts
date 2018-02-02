@@ -400,4 +400,57 @@ export class OrderService {
             )
     }
 
+
+
+
+    getDict(urlModel: string, query?: any): Observable<any[]> {
+        let params = new HttpParams()
+
+        if (query.name) { params = params.append('name', query.name) }
+
+        return this.http.get<any[]>(this.urlApi + '/' + urlModel, {params : params})
+            .pipe(
+                tap(results => {
+                    this.saveLocalStorage(urlModel, results)
+                    console.log(`getDict: `, results)
+                }),
+                catchError(this.handleError<any>('getDict', []))
+            )
+    }
+
+    getDictById(urlModel: string, id: number): Observable<any> {
+        const url = `${this.urlApi}/${urlModel}/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(result => console.log(`getDictById id=${id}: `, result)),
+                catchError(this.handleError<any>(`getDictById id=${id}`))
+            )
+    }
+
+    addDict(urlModel: string, Dict: any): Observable<any> {
+        return this.http.post<any>(this.urlApi + '/' + urlModel, Dict, httpOptions)
+            .pipe(
+                tap((result) => console.log(`addDict id=${Dict.id}: `, result)),
+                catchError(this.handleError<any>('addDict'))
+            )
+    }
+
+    updateDict(urlModel: string, Dict: any): Observable<any> {
+        return this.http.put(this.urlApi + '/' + urlModel, Dict, httpOptions)
+            .pipe(
+                tap(result => console.log(`updateDict id=${Dict.id}: `, result)),
+                catchError(this.handleError<any>('updateDict'))
+            )
+    }
+
+    deleteDict(urlModel: string, Dict: any | number): Observable<any> {
+        const id = typeof Dict === 'number' ? Dict : Dict.id
+
+        return this.http.delete<any>(`${this.urlApi}/${urlModel}/${id}: `, httpOptions)
+            .pipe(
+                tap(result => console.log(`deleteDict id=${id}`, result)),
+                catchError(this.handleError<any>('deleteDict'))
+            )
+    }
 }
