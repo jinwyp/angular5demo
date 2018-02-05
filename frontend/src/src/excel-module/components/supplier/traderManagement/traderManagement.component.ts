@@ -32,6 +32,7 @@ export class TraderManagementComponent implements OnInit {
     traderTypeAllList: any[] = [
         {id : 'TRADER', name : '贸易商'},
         {id : 'MINE', name : '煤炭矿方'},
+        {id : 'CCSACCOUNTING', name : 'CCS账务公司'},
         {id : 'CCSTRADER', name : 'CCS贸易商'},
         {id : 'POWERPLANT', name : '电厂'},
     ]
@@ -53,6 +54,9 @@ export class TraderManagementComponent implements OnInit {
     traderFormValidationMessages: any = {
         'name' : {
             'required' : '请填写公司名称!'
+        },
+        'shortName' : {
+            'required' : '请填写公司简称!'
         },
         'traderType' : {
             'required' : '请选择贸易商类型!'
@@ -76,7 +80,17 @@ export class TraderManagementComponent implements OnInit {
 
 
     ngOnInit() {
-        this.route.data.subscribe( (data) => this.isCCSTrader = data.isCCSTrader)
+        this.route.data.subscribe( (data) => {
+            this.isCCSTrader = data.isCCSTrader
+
+            if (this.isCCSTrader) {
+                this.traderTypeList = [
+                    {id : 'CCSACCOUNTING', name : 'CCS账务公司'},
+                    {id : 'CCSTRADER', name : 'CCS贸易商'},
+                ]
+            }
+
+        })
 
         this.createTraderForm()
         this.createTraderSearchForm()
@@ -131,11 +145,13 @@ export class TraderManagementComponent implements OnInit {
         if (this.isCCSTrader) {
             this.traderForm = this.fb.group({
                 'name' : ['', [Validators.required]],
+                'shortName' : [''],
                 'traderType' : ['CCSTRADER', [Validators.required]]
             })
         } else {
             this.traderForm = this.fb.group({
                 'name' : ['', [Validators.required]],
+                'shortName' : [''],
                 'traderType' : ['', [Validators.required]]
             })
         }
@@ -236,7 +252,9 @@ export class TraderManagementComponent implements OnInit {
             this.isAddNew = true
 
             this.traderForm.patchValue({
-                'name' : ''})
+                'name' : '',
+                'shortName' : ''
+            })
 
         } else {
             this.isAddNew = false

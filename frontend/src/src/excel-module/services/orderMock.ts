@@ -136,7 +136,27 @@ export class InMemOrderDataService implements InMemoryDbService {
             {id : 1, name : '开发公司', traderType : 'CCSTRADER', company : '', },
             {id : 2, name : '印尼公司', traderType : 'CCSTRADER', company : ''},
             {id : 3, name : '华南公司', traderType : 'CCSTRADER', company : ''},
-            {id : 4, name : '华南公司', traderType : 'CCSTRADER', company : ''}
+            {id : 4, name : '华南公司', traderType : 'CCSTRADER', company : ''},
+
+            {id : 21, name : '江苏晋和电力燃料有限公司', shortName: '晋和', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 22, name : '那曲瑞昌煤炭运销有限公司', shortName: '那曲', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 23, name : '郑州嘉瑞供应链管理有限公司 ', shortName: '嘉瑞', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 24, name : '山西瑞茂通供应链有限公司', shortName: '山瑞', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 25, name : '宁夏瑞茂通供应链管理有限公司	 ', shortName: '宁夏瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 26, name : '宁夏华运昌煤炭运销有限公司', shortName: '华运昌', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 27, name : '宁夏腾瑞达电力燃料有限公司', shortName: '腾瑞达', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 28, name : '陕西秦瑞丰煤炭运销有限公司', shortName: '秦瑞丰', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 29, name : '陕西吕通贸易有限公司', shortName: '吕通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 30, name : '新疆瑞茂通供应链管理有限公司', shortName: '新疆瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 31, name : '浙江瑞茂通供应链管理有限公司', shortName: '浙江瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 32, name : '浙江和辉电力燃料有限公司', shortName: '和辉', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 33, name : '江苏丰泰物资贸易有限公司', shortName: '丰泰', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 34, name : '宣威瑞茂通商贸有限公司', shortName: '宣威瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 35, name : '江西瑞茂通供应链管理有限公司', shortName: '江西瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 36, name : '上海瑞易供应链管理有限公司', shortName: '上海瑞易', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 37, name : '深圳前海瑞茂通供应链平台服务有限公司 ', shortName: '前海瑞茂通', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 38, name : '乌海市嘉运和商贸有限公司', shortName: '乌海嘉运和', traderType : 'CCSACCOUNTING', company : '', },
+            {id : 39, name : '河南腾瑞能源产业开发有限公司', shortName: '河南腾瑞', traderType : 'CCSACCOUNTING', company : '', },
         ]
 
         const ccsLocal = localStorage.getItem('ccs')

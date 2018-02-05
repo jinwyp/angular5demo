@@ -18,7 +18,8 @@
             <form [formGroup]="traderForm" (keydown.enter)="$event.preventDefault()" >
 
                 <bs-text-input formControlName="name" [fc]="traderForm.get('name')" [type]="'text'" [label]="'公司名称:'" [dirty]="ignoreDirty" [error]="traderFormError.name"></bs-text-input>
-                <bs-select formControlName ="traderType" [fc]="traderForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [error]="traderFormError.traderType" [hidden]="isCCSTrader"></bs-select>
+                <bs-text-input formControlName="shortName" [fc]="traderForm.get('shortName')" [type]="'text'" [label]="'公司简称:'" [dirty]="ignoreDirty" [error]="traderFormError.shortName"></bs-text-input>
+                <bs-select formControlName ="traderType" [fc]="traderForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [error]="traderFormError.traderType"></bs-select>
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
@@ -41,7 +42,7 @@
                         <bs-text-input formControlName="name" [fc]="traderSearchForm.get('name')" [type]="'text'" [label]="'公司名称:'" ></bs-text-input>
                     </div>
                     <div class="col-6">
-                        <bs-select formControlName ="traderType" [fc]="traderSearchForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [addAllOptions]="true" [hidden]="isCCSTrader"></bs-select>
+                        <bs-select formControlName ="traderType" [fc]="traderSearchForm.get('traderType')" [label]="'贸易商类型:'" [options]="traderTypeList" [addAllOptions]="true"></bs-select>
                     </div>
                 </div>
 
@@ -70,6 +71,7 @@
                 <tr>
                     <th>ID</th>
                     <th>公司名称</th>
+                    <th>公司简称</th>
                     <th>类型</th>
                     <th></th>
                 </tr>
@@ -78,6 +80,7 @@
                     <tr *ngFor="let ship of traderList; trackBy: trackByFn">
                         <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
                         <td> {{ship.name }}</td>
+                        <td> {{ship.shortName }}</td>
                         <td> {{ship.traderType | findKey : traderTypeAllList : 'name'  }}</td>
 
                         <td>
