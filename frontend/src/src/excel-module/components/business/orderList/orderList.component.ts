@@ -522,14 +522,16 @@ export class OrderListComponent implements OnInit {
             const lineName = this.companyList.map(company => company.companyName).join(' - ')
             this.orderForm.patchValue({name : lineName})
 
-            this.companyList.reduce( (prev, current) => {
+            this.companyList.reduce( (prev, current, index) => {
 
                 this.transactionList.push({
+                    id : index,
                     sourceCompanyId : prev.companyId,
                     sourceCompanyName : prev.companyName,
                     targetCompanyId : current.companyId,
                     targetCompanyName : current.companyName,
-                    transactionName : prev.companyName + ' => ' + current.companyName
+                    transactionName : prev.companyName + ' => ' + current.companyName,
+                    name : prev.companyName + ' => ' + current.companyName
                 })
                 return current
 

@@ -238,6 +238,15 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
+        let contracts = []
+
+        const contractsLocal = localStorage.getItem('contracts')
+        if (contractsLocal) {
+            contracts = JSON.parse(contractsLocal)
+        }
+
+
+
         let reports = []
 
         const reportsLocal = localStorage.getItem('reports')
@@ -248,6 +257,6 @@ export class InMemOrderDataService implements InMemoryDbService {
 
 
 
-        return {departments, teams, users, orders, shipAgencies, ships, harbors, traders, coalType, businessNames, reports}
+        return {departments, teams, users, shipAgencies, ships, harbors, traders, coalType, businessNames, orders, contracts, reports}
     }
 }

@@ -15,8 +15,8 @@ import { formErrorHandler, isMobilePhone } from '../../../../bs-form-module/vali
 })
 export class ContractManagementComponent implements OnInit {
 
-    harborForm: FormGroup
-    harborSearchForm: FormGroup
+    contractForm: FormGroup
+    contractSearchForm: FormGroup
     ignoreDirty: boolean = false
 
 
@@ -24,7 +24,13 @@ export class ContractManagementComponent implements OnInit {
     isAddNew: boolean   = true
 
     currentOrderId: number
-    harborList: any[] = []
+    contractList: any[] = []
+
+
+    coalTypeList: any[] = []
+    orderList: any[] = []
+    orderListObject: any = {}
+    orderTransactionList: any[] = []
 
 
     pagination: any = {
@@ -34,10 +40,22 @@ export class ContractManagementComponent implements OnInit {
     }
 
 
-    harborFormError: any              = {}
-    harborFormValidationMessages: any = {
-        'name' : {
-            'required' : '公司名称!'
+    contractFormError: any              = {}
+    contractFormValidationMessages: any = {
+        'orderId' : {
+            'required' : '请选择业务线!'
+        },
+        'orderTransactionId' : {
+            'required' : '请选择业务线环节!'
+        },
+        'coalType' : {
+            'required' : '请选择煤种!'
+        },
+        'quantity' : {
+            'required' : '请填入数量!'
+        },
+        'unitPrice' : {
+            'required' : '请填入单价!'
         }
     }
 
@@ -57,85 +75,115 @@ export class ContractManagementComponent implements OnInit {
 
 
     ngOnInit() {
-        this.createHarborForm()
-        this.createHarborSearchForm()
-        this.getHarborList()
+        this.createContractForm()
+        this.createContractSearchForm()
+        this.getCoalTypeList()
+        this.getOrderList()
+        this.getContractList()
     }
 
 
 
+    getCoalTypeList() {
+
+        this.orderService.getDict('coalType', {}).subscribe(
+            data => { this.coalTypeList = data},
+            error => { this.httpService.errorHandler(error)}
+        )
+    }
+
+    getOrderList() {
+
+        this.orderService.getOrders({}).subscribe(
+            data => {
+                this.orderList = data
+
+                this.orderList.forEach((order) => {
+                    this.orderListObject[order.id] = order
+                })
+            },
+            error => { this.httpService.errorHandler(error)}
+        )
+    }
 
 
-    getHarborList(event?: any) {
+
+    getContractList(event?: any) {
 
         let query: any = {
             pageSize : this.pagination.pageSize,
             pageNo   : this.pagination.pageNo
         }
 
-        query = (<any>Object).assign(query, this.harborSearchForm.value)
+        query = (<any>Object).assign(query, this.contractSearchForm.value)
 
         console.log(query)
-        this.orderService.getHarbors(query).subscribe(
-            data => { this.harborList = data},
+        this.orderService.getDict('contracts', query).subscribe(
+            data => { this.contractList = data},
             error => { this.httpService.errorHandler(error)}
         )
     }
 
 
-    createHarborSearchForm(): void {
+    createContractSearchForm(): void {
 
-        this.harborSearchForm = this.fb.group({
-            'name' : ['']
+        this.contractSearchForm = this.fb.group({
+            'coalType' : [''],
+            'quantity' : [''],
+            'unitPrice' : [''],
         })
     }
 
-    harborFormInputChange(formInputData: any) {
-        this.harborFormError = formErrorHandler(formInputData, this.harborForm, this.harborFormValidationMessages)
+    contractFormInputChange(formInputData: any) {
+        this.contractFormError = formErrorHandler(formInputData, this.contractForm, this.contractFormValidationMessages)
     }
 
 
-    createHarborForm(): void {
+    createContractForm(): void {
 
-        this.harborForm = this.fb.group({
-            'name' : ['', [Validators.required]]
+        this.contractForm = this.fb.group({
+            'orderId' : ['', [Validators.required]],
+            'orderTransactionId' : ['', [Validators.required]],
+            'coalType' : ['', [Validators.required]],
+            'quantity' : ['', [Validators.required]],
+            'unitPrice' : ['', [Validators.required]]
         })
 
-        this.harborForm.valueChanges.subscribe(data => {
+        this.contractForm.valueChanges.subscribe(data => {
             this.ignoreDirty = false
-            this.harborFormInputChange(data)
+            this.contractFormInputChange(data)
         })
     }
 
 
-    harborFormSubmit() {
+    contractFormSubmit() {
 
-        if (this.harborForm.invalid) {
-            this.harborFormInputChange(this.harborForm.value)
+        if (this.contractForm.invalid) {
+            this.contractFormInputChange(this.contractForm.value)
             this.ignoreDirty = true
 
-            console.log('当前信息: ', this.harborForm, this.harborFormError)
+            console.log('当前信息: ', this.contractForm, this.contractFormError)
             return
         }
 
-        const postData = this.harborForm.value
+        const postData = this.contractForm.value
 
         if (this.isAddNew) {
 
-            if (this.harborList.length === 0) {
+            if (this.contractList.length === 0) {
                 postData.id = 1
             } else {
-                const maxId = Math.max.apply(Math, this.harborList.map(list => list.id))
+                const maxId = Math.max.apply(Math, this.contractList.map(list => list.id))
                 postData.id = maxId + 1
             }
 
 
-            this.orderService.addHarbor(postData).subscribe(
+            this.orderService.addDict('contracts', postData).subscribe(
                 data => {
                     console.log('保存成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getHarborList()
+                    this.getContractList()
                     this.isShowForm = false
 
                 },
@@ -143,12 +191,12 @@ export class ContractManagementComponent implements OnInit {
             )
         } else {
             postData.id = this.currentOrderId
-            this.orderService.updateHarbor(postData).subscribe(
+            this.orderService.updateDict('contracts', postData).subscribe(
                 data => {
                     console.log('修改成功: ', data)
                     this.httpService.successHandler(data)
 
-                    this.getHarborList()
+                    this.getContractList()
                     this.isShowForm = false
                 },
                 error => {this.httpService.errorHandler(error)}
@@ -160,16 +208,22 @@ export class ContractManagementComponent implements OnInit {
 
     showForm(isAddNew: boolean = true, ship?: any) {
 
+        this.orderTransactionList = []
         if (isAddNew) {
             this.isAddNew = true
 
-            this.harborForm.patchValue({
-                'name' : ''})
+            this.contractForm.patchValue({
+                'orderId' : '',
+                'orderTransactionId' : '',
+                'coalType' : '',
+                'quantity' : '',
+                'unitPrice' : ''
+            })
 
         } else {
             this.isAddNew = false
             this.currentOrderId = ship.id
-            this.harborForm.patchValue(ship)
+            this.contractForm.patchValue(ship)
         }
 
         this.isShowForm = !this.isShowForm
@@ -178,17 +232,26 @@ export class ContractManagementComponent implements OnInit {
 
     deleteItem(ship: any) {
 
-        this.orderService.deleteHarbor(ship).subscribe(
+        this.orderService.deleteDict('contracts', ship).subscribe(
             data => {
                 console.log('删除成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getHarborList()
+                this.getContractList()
             },
             error => {
                 this.httpService.errorHandler(error)
             }
         )
+    }
+
+
+    filterTransaction (event : any) {
+
+        if (this.contractForm.value.orderId) {
+            this.orderTransactionList = this.orderListObject[this.contractForm.value.orderId].transactionList
+        }
+
     }
 
 }

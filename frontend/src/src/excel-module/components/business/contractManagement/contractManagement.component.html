@@ -15,13 +15,20 @@
 
     <div class="row" *ngIf="isShowForm">
         <div class="col">
-            <form [formGroup]="harborForm" (keydown.enter)="$event.preventDefault()" >
+            <form [formGroup]="contractForm" (keydown.enter)="$event.preventDefault()" >
 
-                <bs-text-input formControlName="name" [fc]="harborForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="harborFormError.name"></bs-text-input>
+                <bs-select formControlName ="orderId" [fc]="contractForm.get('orderId')" [label]="'业务线:'" [dirty]="ignoreDirty" [options]="orderList" [error]="contractFormError.orderId" (outputChange)="filterTransaction($event)"></bs-select>
+                <bs-select formControlName ="orderTransactionId" [fc]="contractForm.get('orderTransactionId')" [label]="'业务线环节:'" [dirty]="ignoreDirty" [options]="orderTransactionList" [error]="contractFormError.orderTransactionId"></bs-select>
+
+
+                <bs-select formControlName ="coalType" [fc]="contractForm.get('coalType')" [label]="'煤种:'" [dirty]="ignoreDirty" [options]="coalTypeList" [error]="contractFormError.coalType"></bs-select>
+
+                <bs-text-input formControlName="quantity" [fc]="contractForm.get('quantity')" [type]="'text'" [label]="'数量:'" [dirty]="ignoreDirty" [error]="contractFormError.quantity"></bs-text-input>
+                <bs-text-input formControlName="unitPrice" [fc]="contractForm.get('unitPrice')" [type]="'text'" [label]="'单价:'" [dirty]="ignoreDirty" [error]="contractFormError.unitPrice"></bs-text-input>
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="harborFormSubmit()">保存</button>
+                        <button type="button" class="btn btn-info " (click)="contractFormSubmit()">保存</button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)">返回</button>
                     </div>
                 </div>
@@ -33,12 +40,22 @@
     <div class="row" *ngIf="!isShowForm">
 
         <div class="col">
-            <form [formGroup]="harborSearchForm" (keydown.enter)="$event.preventDefault()">
+            <form [formGroup]="contractSearchForm" (keydown.enter)="$event.preventDefault()">
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="harborSearchForm.get('name')" [type]="'text'" [label]="'港口名称:'" ></bs-text-input>
+                        <bs-select formControlName ="coalType" [fc]="contractSearchForm.get('coalType')" [label]="'煤种:'" [options]="coalTypeList" [addAllOptions]="true"></bs-select>
                     </div>
+                    <div class="col-6">
+                        <bs-text-input formControlName="quantity" [fc]="contractSearchForm.get('quantity')" [type]="'text'" [label]="'数量:'" ></bs-text-input>
+                    </div>
+                </div>
+
+                <div class="form-row ">
+                    <div class="col-6">
+                        <bs-text-input formControlName="unitPrice" [fc]="contractSearchForm.get('unitPrice')" [type]="'text'" [label]="'单价:'" ></bs-text-input>
+                    </div>
+
                 </div>
 
                 <!--<div class="form-row ">-->
@@ -55,7 +72,7 @@
 
                 <div class="form-group row">
                     <div class="col-11 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="getShipList()">查询</button>
+                        <button type="button" class="btn btn-info " (click)="getContractList()">查询</button>
                     </div>
                 </div>
             </form>
@@ -65,18 +82,24 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>港口名称</th>
+                    <th>业务线</th>
+                    <th>煤种</th>
+                    <th>数量</th>
+                    <th>单价</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ship of harborList; trackBy: trackByFn">
-                        <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
-                        <td> {{ship.name }}</td>
+                    <tr *ngFor="let contract of contractList; trackBy: trackByFn">
+                        <td> <a class="btn btn-link btn-sm" role="button"> {{contract.id}}</a> </td>
+                        <td> {{contract.orderId | findKey : orderList : 'name' }}</td>
+                        <td> {{contract.coalType | findKey : coalTypeList : 'name' }}</td>
+                        <td> {{contract.quantity }}</td>
+                        <td> {{contract.unitPrice }}</td>
 
                         <td>
-                            <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>
-                            <button class="btn btn-link btn-sm" (click)="deleteItem(ship)"> 删除</button>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, contract)"> 修改</button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(contract)"> 删除</button>
                         </td>
                     </tr>
                 </tbody>
