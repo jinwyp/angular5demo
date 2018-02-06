@@ -137,7 +137,7 @@ export class DocumentDailyReportComponent implements OnInit {
   ngOnInit () {
     this.createOrderForm()
     this.createOrderSearchForm()
-    this.getOrderList()
+    this.getReportList()
     this.getData()
   }
 
@@ -171,7 +171,7 @@ export class DocumentDailyReportComponent implements OnInit {
   }
 
 
-  getOrderList (event? : any) {
+  getReportList (event? : any) {
 
     let query : any = {
       pageSize: this.pagination.pageSize,
@@ -181,7 +181,7 @@ export class DocumentDailyReportComponent implements OnInit {
     query = (<any>Object).assign(query, this.orderSearchForm.value)
 
     console.log(query)
-    this.orderService.getOrders(query).subscribe(
+    this.orderService.getReports(query).subscribe(
         data => {
             this.orderList = data
         },
@@ -253,12 +253,12 @@ export class DocumentDailyReportComponent implements OnInit {
       }
 
 
-        this.orderService.addOrder(postData).subscribe(
+        this.orderService.addReport(postData).subscribe(
             data => {
                 console.log('保存成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getOrderList()
+                this.getReportList()
                 this.isShowForm = false
 
             },
@@ -266,12 +266,12 @@ export class DocumentDailyReportComponent implements OnInit {
         )
     } else {
         postData.id = this.currentOrderId
-        this.orderService.updateOrder(postData).subscribe(
+        this.orderService.updateReport(postData).subscribe(
             data => {
                 console.log('修改成功: ', data)
                 this.httpService.successHandler(data)
 
-                this.getOrderList()
+                this.getReportList()
                 this.isShowForm = false
 
             },
@@ -326,12 +326,12 @@ export class DocumentDailyReportComponent implements OnInit {
 
   deleteItem (order: any) {
 
-    this.orderService.deleteOrder(order).subscribe(
+    this.orderService.deleteReport(order).subscribe(
       data => {
         console.log('删除成功: ', data)
         this.httpService.successHandler(data)
 
-        this.getOrderList()
+        this.getReportList()
       },
       error => {this.httpService.errorHandler(error) }
     )

@@ -9,6 +9,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap'
 import {BSFormModule} from '../bs-form-module/bs-form.module'
 
 
+import {ArraySortPipe} from './pipes/arraySortPipe'
+
 import {AdminHomeComponent} from './components/adminHome/adminHome.component'
 
 import {DocumentDailyReportComponent} from './components/report/documentDailyReport/documentDailyReport.component'
@@ -52,6 +54,9 @@ const adminHomeRoutes: Routes = [
 
     {path : 'dict/coaltype', component : CoalTypeDictinaryComponent},
 
+
+    {path : 'business/line', component : OrderListComponent},
+
     {path : 'report/daily', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
 ]
@@ -60,6 +65,8 @@ const adminHomeRoutes: Routes = [
 
 @NgModule({
     declarations : [
+        ArraySortPipe,
+
         AdminHomeComponent,
 
         ShipAgencyComponent,
@@ -74,6 +81,10 @@ const adminHomeRoutes: Routes = [
 
 
         CoalTypeDictinaryComponent,
+
+
+        OrderListComponent,
+
 
         DocumentDailyReportComponent
     ],

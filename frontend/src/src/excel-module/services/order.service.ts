@@ -60,6 +60,7 @@ export class OrderService {
     }
 
 
+
     getOrders(query?: any): Observable<any[]> {
 
         let params = new HttpParams()
@@ -127,6 +128,78 @@ export class OrderService {
 
 
 
+
+
+
+    getReports(query?: any): Observable<any[]> {
+
+        let params = new HttpParams()
+        // .set('pageSize', query.pageSize)
+        // .set('pageNo', query.pageNo)
+
+        if (query.businessName) {params = params.append('businessName', query.businessName)}
+        if (query.shipName) {params = params.append('shipName', query.shipName)}
+
+        return this.http.get<any[]>(this.urlApi + '/reports', {params : params})
+            .pipe(
+                tap(orders => {
+                    this.saveLocalStorage('reports', orders)
+                    console.log(`getReports: `, orders)
+                }),
+                catchError(this.handleError('getReports', []))
+            )
+    }
+
+    getReportById(id: number): Observable<any> {
+        const url = `${this.urlApi}/reports/${id}`
+
+        return this.http.get<any>(url)
+            .pipe(
+                tap(order => console.log(`getReportById id=${id}`, order)),
+                catchError(this.handleError<any>(`getReportById id=${id}`))
+            )
+    }
+
+
+    /** POST: add a new order to the server */
+    addReport(report: any): Observable<any> {
+
+        return this.http.post<any>(this.urlApi + '/reports', report, httpOptions)
+            .pipe(
+                tap((resultReport) => console.log(`added report id=${report.id}`)),
+                catchError(this.handleError<any>('addReport'))
+            )
+    }
+
+
+    /** PUT: update the order on the server */
+    updateReport(report: any): Observable<any> {
+
+        return this.http.put(this.urlApi + '/reports', report, httpOptions)
+            .pipe(
+                tap(resultReport => console.log(`updated report id=${report.id}`)),
+                catchError(this.handleError<any>('updateReport'))
+            )
+    }
+
+
+    /** DELETE: delete the order from the server */
+    deleteReport(report: any | number): Observable<any> {
+        const id  = typeof report === 'number' ? report : report.id
+        const url = `${this.urlApi}/reports/${id}`
+
+        return this.http.delete<any>(url, httpOptions)
+            .pipe(
+                tap(resultReport => console.log(`deleted report id=${id}`, resultReport)),
+                catchError(this.handleError<any>('deleteReport'))
+            )
+    }
+
+
+
+
+
+
     getShips(query?: any): Observable<any[]> {
         let params = new HttpParams()
 
@@ -150,7 +223,7 @@ export class OrderService {
         return this.http.get<any>(url)
             .pipe(
                 tap(result => console.log(`getShipById id=${id}: `, result)),
-                catchError(this.handleError<any>(`getOrderById id=${id}`))
+                catchError(this.handleError<any>(`getShipById id=${id}`))
             )
     }
 
@@ -347,58 +420,6 @@ export class OrderService {
 
 
 
-
-
-    getCCSTraders(query?: any): Observable<any[]> {
-        let params = new HttpParams()
-
-        if (query.name) { params = params.append('name', query.name) }
-
-        return this.http.get<any[]>(this.urlApi + '/ccs', {params : params})
-            .pipe(
-                tap(results => {
-                    this.saveLocalStorage('ccs', results)
-                    console.log(`getCCSTraders: `, results)
-                }),
-                catchError(this.handleError<any>('getCCSTraders', []))
-            )
-    }
-
-    getCCSTraderById(id: number): Observable<any> {
-        const url = `${this.urlApi}/ccs/${id}`
-
-        return this.http.get<any>(url)
-            .pipe(
-                tap(result => console.log(`getCCSTraderById id=${id}: `, result)),
-                catchError(this.handleError<any>(`getCCSTraderById id=${id}`))
-            )
-    }
-
-    addCCSTrader(CCSTrader: any): Observable<any> {
-        return this.http.post<any>(this.urlApi + '/ccs', CCSTrader, httpOptions)
-            .pipe(
-                tap((result) => console.log(`addCCSTrader id=${CCSTrader.id}: `, result)),
-                catchError(this.handleError<any>('addCCSTrader'))
-            )
-    }
-
-    updateCCSTrader(CCSTrader: any): Observable<any> {
-        return this.http.put(this.urlApi + '/ccs', CCSTrader, httpOptions)
-            .pipe(
-                tap(result => console.log(`updateCCSTrader id=${CCSTrader.id}: `, result)),
-                catchError(this.handleError<any>('updateCCSTrader'))
-            )
-    }
-
-    deleteCCSTrader(CCSTrader: any | number): Observable<any> {
-        const id = typeof CCSTrader === 'number' ? CCSTrader : CCSTrader.id
-
-        return this.http.delete<any>(`${this.urlApi}/ccs/${id}: `, httpOptions)
-            .pipe(
-                tap(result => console.log(`deleteCCSTrader id=${id}`, result)),
-                catchError(this.handleError<any>('deleteCCSTrader'))
-            )
-    }
 
 
 

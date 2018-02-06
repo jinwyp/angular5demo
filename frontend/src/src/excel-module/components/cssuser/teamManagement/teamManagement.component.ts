@@ -38,7 +38,7 @@ export class TeamManagementComponent implements OnInit {
     teamFormError: any              = {}
     teamFormValidationMessages: any = {
         'name' : {
-            'required' : '请填写业务团队名称!'
+            'required' : 'qin名称!'
         }
     }
 

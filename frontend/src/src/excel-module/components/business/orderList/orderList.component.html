@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h3 class="mt-4 mb-4">
-                港口管理
+                业务线管理
                 <button type="button" class="btn btn-outline-info btn-sm float-right" *ngIf="!isShowForm" (click)="showForm(true)">添加</button>
             </h3>
         </div>
@@ -15,13 +15,108 @@
 
     <div class="row" *ngIf="isShowForm">
         <div class="col">
-            <form [formGroup]="harborForm" (keydown.enter)="$event.preventDefault()" >
+            <form [formGroup]="orderForm" (keydown.enter)="$event.preventDefault()" >
 
-                <bs-text-input formControlName="name" [fc]="harborForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="harborFormError.name"></bs-text-input>
+                <bs-select formControlName ="departmentId" [fc]="orderForm.get('departmentId')" [label]="'事业部:'" [dirty]="ignoreDirty" [options]="departmentList" [error]="orderFormError.departmentId"  ></bs-select>
+                <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [dirty]="ignoreDirty" [options]="teamList" [error]="orderFormError.teamId" ></bs-select>
+                <!--<bs-text-input formControlName="name" [fc]="orderForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="orderFormError.name"></bs-text-input>-->
+
+
+                <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.upstreamId"></bs-select>
+
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" ></label>
+
+                    <div class="col-10">
+                        <ul class="list-group" >
+                            <li class="list-group-item mb-2" *ngFor=" let company of upstreamBridgeCompany  ; let i = index ; let isFirst = first; let isLast = last">
+                                <button type="button" class="btn btn-outline-info btn-sm" *ngIf="!isFirst" (click)="changeBridgeCompanyPosition('up', 'upstream', company)"> &#8593; </button>
+                                <button type="button" class="btn btn-outline-info btn-sm" *ngIf="!isLast" (click)="changeBridgeCompanyPosition('down', 'upstream', company)"> &#8595; </button>
+                                位置顺序:{{ company.position }} - {{company.customerType | findKey: customerTypeList: 'name'}} : {{company.companyId | findKey:traderList:'name'}}
+                                <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBridgeCompany('upstream', company )"> x </button>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" ></label>
+
+                    <div class="col-10" >
+
+                        <form [formGroup]="orderUpstreamCompanyForm" (keydown.enter)="$event.preventDefault()">
+
+                            <div class="form-row ">
+                                <div class="col-3">
+                                    <bs-select formControlName ="customerType" [fc]="orderUpstreamCompanyForm.get('customerType')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择客户类型:'" [dirty]="ignoreDirty2" [options]="customerTypeList" [error]="orderUpstreamCompanyFormError.customerType" (outputChange)="filterCompanyList($event)"></bs-select>
+                                </div>
+                                <div class="col-6">
+                                    <bs-select formControlName ="companyId" [fc]="orderUpstreamCompanyForm.get('companyId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择公司:'" [dirty]="ignoreDirty2" [editable]="true" [options]="traderListOptions" [error]="orderUpstreamCompanyFormError.companyId"></bs-select>
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-info" (click)="createBridgeCompany('upstream')">添加</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <bs-select formControlName ="mainAccountingId" [fc]="orderForm.get('mainAccountingId')" [label]="'主账务公司:'" [editable]="true" [dirty]="ignoreDirty" [options]="CCSAccountingList" [error]="orderFormError.mainAccountingId"></bs-select>
+
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" ></label>
+
+                    <div class="col-10">
+                        <ul class="list-group" >
+                            <li class="list-group-item mb-2" *ngFor=" let company of downstreamBridgeCompany  ; let i = index ; let isFirst = first; let isLast = last">
+                                <button type="button" class="btn btn-outline-info btn-sm" *ngIf="!isFirst" (click)="changeBridgeCompanyPosition('up', 'downstream', company)"> &#8593; </button>
+                                <button type="button" class="btn btn-outline-info btn-sm" *ngIf="!isLast" (click)="changeBridgeCompanyPosition('down', 'downstream', company)"> &#8595; </button>
+                                位置顺序:{{ company.position }} - {{company.customerType | findKey: customerTypeList: 'name'}} : {{company.companyId | findKey:traderList:'name'}}
+                                <button type="button" class="ml-4 btn btn-outline-danger btn-sm" (click)="delBridgeCompany('downstream', company)"> x </button>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 col-form-label" ></label>
+
+                    <div class="col-10" >
+
+                        <form [formGroup]="orderUpstreamCompanyForm" (keydown.enter)="$event.preventDefault()">
+
+                            <div class="form-row ">
+                                <div class="col-3">
+                                    <bs-select formControlName ="customerType" [fc]="orderUpstreamCompanyForm.get('customerType')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择客户类型:'" [dirty]="ignoreDirty2" [options]="customerTypeList" [error]="orderUpstreamCompanyFormError.customerType" (outputChange)="filterCompanyList($event)"></bs-select>
+                                </div>
+                                <div class="col-6">
+                                    <bs-select formControlName ="companyId" [fc]="orderUpstreamCompanyForm.get('companyId')" [labelclass]="'col-0'" [inputclass]="'col-12'" [prompt]="'请选择公司:'" [dirty]="ignoreDirty2" [editable]="true" [options]="traderListOptions" [error]="orderUpstreamCompanyFormError.companyId"></bs-select>
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-info" (click)="createBridgeCompany('downstream')">添加</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+                <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.downstreamId"></bs-select>
+
+                <bs-select formControlName ="terminalClientId" [fc]="orderForm.get('terminalClientId')" [label]="'终端客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.terminalClientId"></bs-select>
+
+
 
                 <div class="form-group row">
                     <div class="col-10 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="harborFormSubmit()">保存</button>
+                        <button type="button" class="btn btn-info " (click)="orderFormSubmit()">保存</button>
                         <button type="button" class="btn btn-outline-secondary" (click)="showForm(true)">返回</button>
                     </div>
                 </div>
@@ -33,11 +128,11 @@
     <div class="row" *ngIf="!isShowForm">
 
         <div class="col">
-            <form [formGroup]="harborSearchForm" (keydown.enter)="$event.preventDefault()">
+            <form [formGroup]="orderSearchForm" (keydown.enter)="$event.preventDefault()">
 
                 <div class="form-row ">
                     <div class="col-6">
-                        <bs-text-input formControlName="name" [fc]="harborSearchForm.get('name')" [type]="'text'" [label]="'港口名称:'" ></bs-text-input>
+                        <bs-text-input formControlName="name" [fc]="orderSearchForm.get('name')" [type]="'text'" [label]="'业务线名称:'" ></bs-text-input>
                     </div>
                 </div>
 
@@ -55,7 +150,7 @@
 
                 <div class="form-group row">
                     <div class="col-11 ml-auto">
-                        <button type="button" class="btn btn-info " (click)="getShipList()">查询</button>
+                        <button type="button" class="btn btn-info " (click)="getOrderList()">查询</button>
                     </div>
                 </div>
             </form>
@@ -65,18 +160,31 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>港口名称</th>
+                    <th>业务线名称</th>
+                    <th>事业部</th>
+                    <th>团队</th>
+                    <th>上游供应商</th>
+                    <th>主账务公司</th>
+                    <th>下游客户</th>
+                    <th>终端客户</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let ship of harborList; trackBy: trackByFn">
-                        <td> <a class="btn btn-link btn-sm" role="button"> {{ship.id}}</a> </td>
-                        <td> {{ship.name }}</td>
+                    <tr *ngFor="let order of orderList; trackBy: trackByFn">
+                        <td> <a class="btn btn-link btn-sm" role="button"> {{order.id}}</a> </td>
+                        <td> {{order.name }}</td>
+
+                        <td> {{order.departmentId | findKey : departmentList : 'name' }}</td>
+                        <td> {{order.teamId | findKey : teamList : 'name' }}</td>
+                        <td> {{order.upstreamId | findKey : traderList : 'name'}}</td>
+                        <td> {{order.mainAccountingId | findKey : traderList : 'name'}}</td>
+                        <td> {{order.downstreamId | findKey : traderList : 'name'}}</td>
+                        <td> {{order.terminalClientId | findKey : traderList : 'name'}}</td>
 
                         <td>
-                            <button class="btn btn-link btn-sm" (click)="showForm(false, ship)"> 修改</button>
-                            <button class="btn btn-link btn-sm" (click)="deleteItem(ship)"> 删除</button>
+                            <button class="btn btn-link btn-sm" (click)="showForm(false, order)"> 修改</button>
+                            <button class="btn btn-link btn-sm" (click)="deleteItem(order)"> 删除</button>
                         </td>
                     </tr>
                 </tbody>

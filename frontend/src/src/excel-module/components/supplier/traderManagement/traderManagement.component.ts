@@ -27,7 +27,10 @@ export class TraderManagementComponent implements OnInit {
     isCCSTrader: boolean   = false
 
     currentOrderId: number
+    traderAllList: any[] = []
     traderList: any[] = []
+    CCSTraderList: any[] = []
+    nonCCSTraderList: any[] = []
 
     traderTypeAllList: any[] = [
         {id : 'TRADER', name : '贸易商'},
@@ -112,18 +115,28 @@ export class TraderManagementComponent implements OnInit {
 
         console.log(query)
 
+        this.orderService.getTraders(query).subscribe(
+            data => {
+                this.traderAllList = data
 
-        if (this.isCCSTrader) {
-            this.orderService.getCCSTraders(query).subscribe(
-                data => { this.traderList = data},
-                error => { this.httpService.errorHandler(error)}
-            )
-        } else {
-            this.orderService.getTraders(query).subscribe(
-                data => { this.traderList = data},
-                error => { this.httpService.errorHandler(error)}
-            )
-        }
+                this.traderAllList.forEach(company => {
+
+                    if (company.traderType === 'CCSACCOUNTING' || company.traderType === 'CCSTRADER') {
+                        this.CCSTraderList.push(company)
+                    } else {
+                        this.nonCCSTraderList.push(company)
+                    }
+                })
+
+                if (this.isCCSTrader) {
+                    this.traderList = this.CCSTraderList.slice()
+                } else {
+                    this.traderList = this.nonCCSTraderList.slice()
+                }
+            },
+            error => { this.httpService.errorHandler(error)}
+        )
+
     }
 
 
@@ -186,59 +199,33 @@ export class TraderManagementComponent implements OnInit {
             }
 
 
-            if (this.isCCSTrader) {
-                this.orderService.addCCSTrader(postData).subscribe(
-                    data => {
-                        console.log('保存成功: ', data)
-                        this.httpService.successHandler(data)
+            this.orderService.addTrader(postData).subscribe(
+                data => {
+                    console.log('保存成功: ', data)
+                    this.httpService.successHandler(data)
 
-                        this.getTraderList()
-                        this.isShowForm = false
+                    this.getTraderList()
+                    this.isShowForm = false
 
-                    },
-                    error => {this.httpService.errorHandler(error)}
-                )
-            } else {
-                this.orderService.addTrader(postData).subscribe(
-                    data => {
-                        console.log('保存成功: ', data)
-                        this.httpService.successHandler(data)
-
-                        this.getTraderList()
-                        this.isShowForm = false
-
-                    },
-                    error => {this.httpService.errorHandler(error)}
-                )
-            }
+                },
+                error => {this.httpService.errorHandler(error)}
+            )
 
 
         } else {
             postData.id = this.currentOrderId
 
-            if (this.isCCSTrader) {
-                this.orderService.updateCCSTrader(postData).subscribe(
-                    data => {
-                        console.log('修改成功: ', data)
-                        this.httpService.successHandler(data)
+            this.orderService.updateTrader(postData).subscribe(
+                data => {
+                    console.log('修改成功: ', data)
+                    this.httpService.successHandler(data)
 
-                        this.getTraderList()
-                        this.isShowForm = false
-                    },
-                    error => {this.httpService.errorHandler(error)}
-                )
-            } else {
-                this.orderService.updateTrader(postData).subscribe(
-                    data => {
-                        console.log('修改成功: ', data)
-                        this.httpService.successHandler(data)
+                    this.getTraderList()
+                    this.isShowForm = false
+                },
+                error => {this.httpService.errorHandler(error)}
+            )
 
-                        this.getTraderList()
-                        this.isShowForm = false
-                    },
-                    error => {this.httpService.errorHandler(error)}
-                )
-            }
 
 
         }
