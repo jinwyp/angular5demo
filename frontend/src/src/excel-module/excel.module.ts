@@ -31,6 +31,7 @@ import {UserManagementComponent} from './components/cssuser/userManagement/userM
 
 
 import {OrderListComponent} from './components/business/orderList/orderList.component'
+import {ContractManagementComponent} from './components/business/contractManagement/contractManagement.component'
 
 
 
@@ -56,6 +57,7 @@ const adminHomeRoutes: Routes = [
 
 
     {path : 'business/line', component : OrderListComponent},
+    {path : 'business/contract', component : ContractManagementComponent},
 
     {path : 'report/daily', component : DocumentDailyReportComponent},
     {path : '**', redirectTo : '/report1', pathMatch : 'full'}
@@ -84,6 +86,7 @@ const adminHomeRoutes: Routes = [
 
 
         OrderListComponent,
+        ContractManagementComponent,
 
 
         DocumentDailyReportComponent

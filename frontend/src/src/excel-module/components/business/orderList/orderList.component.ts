@@ -31,6 +31,7 @@ export class OrderListComponent implements OnInit {
     teamList: any[] = []
 
     traderList: any[] = []
+    traderListObject: any = {}
     CCSTraderList: any[] = []
     CCSAccountingList: any[] = []
     nonCCSTraderList: any[] = []
@@ -39,6 +40,8 @@ export class OrderListComponent implements OnInit {
 
     upstreamBridgeCompany : any[] = []
     downstreamBridgeCompany : any[] = []
+    transactionList : any[] = []
+    companyList : any[] = []
 
 
 
@@ -64,7 +67,7 @@ export class OrderListComponent implements OnInit {
     orderUpstreamCompanyFormError: any  = {}
     orderFormValidationMessages: any = {
         'name' : {
-            'required' : '公司名称!'
+            'required' : '请填写业务线名称!'
         },
         'departmentId' : {
             'required' : '请选择事业部!'
@@ -138,6 +141,10 @@ export class OrderListComponent implements OnInit {
                 this.traderList = data
 
                 this.traderList.slice().forEach( company => {
+
+                    this.traderListObject[company.id] = company
+
+
                     if (company.traderType === 'CCSTRADER') {
                         this.CCSTraderList.push(company)
                     }
@@ -190,6 +197,7 @@ export class OrderListComponent implements OnInit {
         this.orderForm = this.fb.group({
             'departmentId' : ['', [Validators.required]],
             'teamId' : ['', [Validators.required]],
+            'name' : ['', []],
             'upstreamId' : ['', [Validators.required]],
             'mainAccountingId' : ['', [Validators.required]],
             'downstreamId' : ['', [Validators.required]],
@@ -214,6 +222,10 @@ export class OrderListComponent implements OnInit {
         }
 
         const postData = this.orderForm.value
+        postData.upstreamBridge = this.upstreamBridgeCompany
+        postData.downBridge = this.downstreamBridgeCompany
+        postData.companyList = this.companyList
+        postData.transactionList = this.transactionList
 
         if (this.isAddNew) {
 
@@ -224,8 +236,7 @@ export class OrderListComponent implements OnInit {
                 postData.id = maxId + 1
             }
 
-            postData.upstreamBridge = this.upstreamBridgeCompany
-            postData.downBridge = this.downstreamBridgeCompany
+
 
             this.orderService.addOrder(postData).subscribe(
                 data => {
@@ -261,7 +272,8 @@ export class OrderListComponent implements OnInit {
             this.isAddNew = true
 
             this.orderForm.patchValue({
-                'name' : ''})
+                'name' : ''
+            })
 
         } else {
             this.isAddNew = false
@@ -390,6 +402,7 @@ export class OrderListComponent implements OnInit {
             'companyId'    : ''
         })
 
+        this.lineName()
     }
 
 
@@ -462,6 +475,7 @@ export class OrderListComponent implements OnInit {
             }
         }
 
+        this.lineName()
     }
 
     delBridgeCompany (type: string, item: any) {
@@ -474,5 +488,57 @@ export class OrderListComponent implements OnInit {
             this.downstreamBridgeCompany.splice(index, 1)
         }
 
+        this.lineName()
     }
+
+
+
+
+    lineName() {
+        this.companyList = []
+        this.transactionList = []
+
+        if (this.orderForm.value.upstreamId && this.orderForm.value.mainAccountingId && this.orderForm.value.downstreamId ) {
+
+            this.companyList.push({companyId : this.orderForm.value.upstreamId, companyName : this.traderListObject[this.orderForm.value.upstreamId].name, customerType: 'upstream'})
+
+            this.upstreamBridgeCompany.forEach( company => {
+                this.companyList.push({companyId : company.companyId, companyName : this.traderListObject[company.companyId].name, customerType: company.customerType})
+            })
+
+            this.companyList.push({companyId : this.orderForm.value.mainAccountingId, companyName : this.traderListObject[this.orderForm.value.mainAccountingId].name, customerType: 'mainAccounting'})
+
+            this.downstreamBridgeCompany.forEach( company => {
+                this.companyList.push({companyId : company.companyId, companyName : this.traderListObject[company.companyId].name, customerType: company.customerType})
+            })
+
+            this.companyList.push({companyId : this.orderForm.value.downstreamId, companyName : this.traderListObject[this.orderForm.value.downstreamId].name, customerType: 'downstream'})
+
+
+            if (this.orderForm.value.terminalClientId) {
+                this.companyList.push({companyId : this.orderForm.value.terminalClientId, companyName : this.traderListObject[this.orderForm.value.terminalClientId].name, customerType: 'terminalClient'})
+            }
+
+            const lineName = this.companyList.map(company => company.companyName).join(' - ')
+            this.orderForm.patchValue({name : lineName})
+
+            this.companyList.reduce( (prev, current) => {
+
+                this.transactionList.push({
+                    sourceCompanyId : prev.companyId,
+                    sourceCompanyName : prev.companyName,
+                    targetCompanyId : current.companyId,
+                    targetCompanyName : current.companyName,
+                    transactionName : prev.companyName + ' => ' + current.companyName
+                })
+                return current
+
+            })
+
+        }
+
+    }
+
+
+
 }

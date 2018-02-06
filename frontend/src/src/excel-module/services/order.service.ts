@@ -67,14 +67,13 @@ export class OrderService {
             // .set('pageSize', query.pageSize)
             // .set('pageNo', query.pageNo)
 
-        if (query.businessName) {params = params.append('businessName', query.businessName)}
-        if (query.shipName) {params = params.append('shipName', query.shipName)}
+        if (query.name) {params = params.append('name', query.name)}
 
         return this.http.get<any[]>(this.urlApi + '/orders', {params : params})
             .pipe(
                 tap(orders => {
                     this.saveLocalStorage('orders', orders)
-                    console.log(`fetched orders: `, orders)
+                    console.log(`getOrders: `, orders)
                 }),
                 catchError(this.handleError('getOrders', []))
             )

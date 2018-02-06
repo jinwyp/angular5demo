@@ -19,10 +19,11 @@
 
                 <bs-select formControlName ="departmentId" [fc]="orderForm.get('departmentId')" [label]="'事业部:'" [dirty]="ignoreDirty" [options]="departmentList" [error]="orderFormError.departmentId"  ></bs-select>
                 <bs-select formControlName ="teamId" [fc]="orderForm.get('teamId')" [label]="'团队:'" [dirty]="ignoreDirty" [options]="teamList" [error]="orderFormError.teamId" ></bs-select>
+                <bs-text-input formControlName="name" [fc]="orderForm.get('name')" [type]="'text'" [label]="'业务线名称:'" [inputclass]="'col-10'" [readOnly]="true" [dirty]="ignoreDirty" [error]="orderFormError.name"></bs-text-input>
                 <!--<bs-text-input formControlName="name" [fc]="orderForm.get('name')" [type]="'text'" [label]="'港口名称:'" [dirty]="ignoreDirty" [error]="orderFormError.name"></bs-text-input>-->
 
 
-                <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.upstreamId"></bs-select>
+                <bs-select formControlName ="upstreamId" [fc]="orderForm.get('upstreamId')" [label]="'上游供应商:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.upstreamId" (outputChange)="lineName()"></bs-select>
 
 
                 <div class="form-group row">
@@ -65,7 +66,7 @@
                 </div>
 
 
-                <bs-select formControlName ="mainAccountingId" [fc]="orderForm.get('mainAccountingId')" [label]="'主账务公司:'" [editable]="true" [dirty]="ignoreDirty" [options]="CCSAccountingList" [error]="orderFormError.mainAccountingId"></bs-select>
+                <bs-select formControlName ="mainAccountingId" [fc]="orderForm.get('mainAccountingId')" [label]="'主账务公司:'" [editable]="true" [dirty]="ignoreDirty" [options]="CCSAccountingList" [error]="orderFormError.mainAccountingId" (outputChange)="lineName()"></bs-select>
 
 
                 <div class="form-group row">
@@ -108,9 +109,9 @@
                 </div>
 
 
-                <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.downstreamId"></bs-select>
+                <bs-select formControlName ="downstreamId" [fc]="orderForm.get('downstreamId')" [label]="'下游客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.downstreamId" (outputChange)="lineName()"></bs-select>
 
-                <bs-select formControlName ="terminalClientId" [fc]="orderForm.get('terminalClientId')" [label]="'终端客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.terminalClientId"></bs-select>
+                <bs-select formControlName ="terminalClientId" [fc]="orderForm.get('terminalClientId')" [label]="'终端客户:'" [editable]="true" [dirty]="ignoreDirty" [options]="nonCCSTraderList" [error]="orderFormError.terminalClientId" (outputChange)="lineName()"></bs-select>
 
 
 

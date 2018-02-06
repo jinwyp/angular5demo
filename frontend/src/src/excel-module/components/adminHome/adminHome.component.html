@@ -128,6 +128,8 @@
             <div class="collapse" [class.show]="menuList[5]&&!isLeftMenuCollapsed || isLeftMenuCollapsed&&currentMouseOverMenu===5" role="tabpanel" aria-labelledby="headingOne" (mouseleave)="mouseLeaveMenu()">
                 <ul class="list-group">
                     <li routerLinkActive="active" > <a routerLink="/business/line" (click)="clickSubMenu(51)">业务线管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/business/contract" (click)="clickSubMenu(52)">合同管理</a> </li>
+                    <li routerLinkActive="active" > <a routerLink="/business/contract" (click)="clickSubMenu(53)">信用证管理</a> </li>
                 </ul>
             </div>
         </div>
